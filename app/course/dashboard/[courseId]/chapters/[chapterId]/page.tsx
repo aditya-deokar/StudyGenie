@@ -2,6 +2,7 @@
 
 
 import { getChapter } from "@/actions/createChapters";
+import AITeacher from "@/components/AITeacher";
 import { ChapterContent } from "@/components/course/chapter-content";
 import { ChapterExercises } from "@/components/course/chapter-exercises";
 import { ChapterNavigation } from "@/components/course/chapter-navigation";
@@ -23,6 +24,8 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 
+
+
 export default function ChapterPage() {
 
   const params = useParams();
@@ -30,6 +33,7 @@ export default function ChapterPage() {
   const chapterId = parseInt(params?.chapterId as string);
   
   const { user } = useUser();
+  
   
 
   const [chapter, setChapter] = useState<ChaptersType | null>(null);
@@ -59,6 +63,32 @@ export default function ChapterPage() {
     return <div>Loading chapter...</div>;
   }
 
+   const generateChapterTextContext = (chap: ChaptersType | null): string => {
+    if (!chap || !chap.content) {
+      return "The content for this chapter is not available right now.";
+    }
+    // This is a simplified example. You should format the most important
+    // text fields from your 'chap.content' object into a clean string.
+    return `
+      Chapter Title: ${chap.content.title}.
+      Introduction: ${chap.content.description || 'Not provided.'}
+      Key Concepts: ${chap.content.contentSections?.map(c => c.content).join(', ') || 'Not provided.'}
+    `;
+  };
+
+  // Prepare props for the AI Teacher
+  const aiTeacherProps = {
+    studentName: user?.fullName || "Student",
+    studentId: user?.id!,
+    profileImage: user?.imageUrl,
+    courseId: courseId,
+    chapterId: chapterId.toString(),
+    chapterTitle: chapter.content.title,
+    chapterContent: generateChapterTextContext(chapter),
+    // This should be fetched from your DB in the future.
+    studentProgress: "Just starting this chapter. Be welcoming!", 
+  };
+
   return (
 
     <>
@@ -75,10 +105,11 @@ export default function ChapterPage() {
       </div>
       <Separator className="my-4" />
 
-      <Tabs defaultValue="content" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+      <Tabs defaultValue="content" className="w-full ">
+         <TabsList className="grid w-full grid-cols-7 dark:dark-gradient light-gradient bg-transparent">
           <TabsTrigger value="content">Content</TabsTrigger>
           <TabsTrigger value="video">Video</TabsTrigger>
+          <TabsTrigger value="ai-teacher">AI Teacher</TabsTrigger> {/* ADDED TAB */}
           <TabsTrigger value="exercises">Exercises</TabsTrigger>
           <TabsTrigger value="objectives">Objectives</TabsTrigger>
           <TabsTrigger value="quiz">Quiz</TabsTrigger>
@@ -87,6 +118,16 @@ export default function ChapterPage() {
 
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
+
+            <TabsContent value="ai-teacher" className="mt-0">
+              <AITeacher 
+                {...aiTeacherProps}
+                // We now apply the background styling here, in the parent component.
+                // className="bg-black bg-opacity-20 backdrop-blur-xl shadow-2xl" 
+              />
+            </TabsContent>
+
+
             <TabsContent value="content" className="mt-0">
               <ChapterContent chapter={chapter?.content} /> {/* Pass chapter directly and change all child component props, remove id */}
             </TabsContent>

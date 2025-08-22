@@ -3,153 +3,107 @@
 import { useState } from "react"
 import type { IndustryData } from "@/lib/types"
 import {
-  SidebarProvider,
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarFooter,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { BarChartIcon, BookOpenIcon, BriefcaseIcon, GraduationCapIcon, HomeIcon, LayoutDashboard, TrendingUpIcon } from "lucide-react"
+  BarChartIcon,
+  BookOpenIcon,
+  BriefcaseIcon,
+  GraduationCapIcon,
+  HomeIcon,
+  LayoutDashboard,
+  TrendingUpIcon,
+} from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs" // Import Tabs components
 import OverviewSection from "./industry-sections/overview-section"
 import SalarySection from "./industry-sections/salary-section"
 import SkillsSection from "./industry-sections/skills-section"
 import EducationSection from "./industry-sections/education-section"
 import TrendsSection from "./industry-sections/trends-section"
 import { Separator } from "./ui/separator"
-import { ThemeSelector } from "./theme-selector"
-import { ModeToggle } from "./ui/mode-toggle"
-import Link from "next/link"
 
 type DashboardProps = {
   data: IndustryData
 }
 
+// Define the sections for easier mapping
+const sections = [
+  {
+    value: "overview",
+    label: "Overview",
+    icon: HomeIcon,
+    component: OverviewSection,
+  },
+  {
+    value: "salary",
+    label: "Salary Insights",
+    icon: BriefcaseIcon,
+    component: SalarySection,
+  },
+  {
+    value: "skills",
+    label: "Skills & Career",
+    icon: BookOpenIcon,
+    component: SkillsSection,
+  },
+  {
+    value: "education",
+    label: "Education & Internships",
+    icon: GraduationCapIcon,
+    component: EducationSection,
+  },
+  {
+    value: "trends",
+    label: "Trends & Outlook",
+    icon: TrendingUpIcon,
+    component: TrendsSection,
+  },
+]
+
 export default function Dashboard({ data }: DashboardProps) {
 
-  // console.log("data1"+ data)
   const [activeSection, setActiveSection] = useState<string>("overview")
 
-  const renderSection = () => {
-    switch (activeSection) {
-      case "overview":
-        return <OverviewSection data={data} />
-      case "salary":
-        return <SalarySection data={data} />
-      case "skills":
-        return <SkillsSection data={data} />
-      case "education":
-        return <EducationSection data={data} />
-      case "trends":
-        return <TrendsSection data={data} />
-      default:
-        return <OverviewSection data={data} />
-    }
-  }
-
   return (
-    <SidebarProvider>
-      <div className="flex h-screen w-full overflow-hidden bg-muted/40">
-        <Sidebar>
-          <SidebarHeader className="border-b">
-            <Link href={"/dashboard"}>
-              <div className="flex items-center gap-2 px-2 py-4">
-                <LayoutDashboard className="h-6 w-6" />
-                <span className="font-semibold">Back to Dashboard</span>
-              </div>
-            </Link>
-            <Separator
-                orientation="horizontal"
-                className="data-[orientation=horizontal]:h-1"
-              />
-            <div className="flex items-center gap-2 px-2 py-4">
-              <BarChartIcon className="h-6 w-6" />
-              <span className="font-semibold">Industry Insights</span>
-            </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      onClick={() => setActiveSection("overview")}
-                      isActive={activeSection === "overview"}
-                    >
-                      <HomeIcon className="h-4 w-4" />
-                      <span>Overview</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton onClick={() => setActiveSection("salary")} isActive={activeSection === "salary"}>
-                      <BriefcaseIcon className="h-4 w-4" />
-                      <span>Salary Insights</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton onClick={() => setActiveSection("skills")} isActive={activeSection === "skills"}>
-                      <BookOpenIcon className="h-4 w-4" />
-                      <span>Skills & Career</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      onClick={() => setActiveSection("education")}
-                      isActive={activeSection === "education"}
-                    >
-                      <GraduationCapIcon className="h-4 w-4" />
-                      <span>Education & Internships</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton onClick={() => setActiveSection("trends")} isActive={activeSection === "trends"}>
-                      <TrendingUpIcon className="h-4 w-4" />
-                      <span>Trends & Outlook</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <SidebarFooter className="border-t p-4">
-            <div className="text-xs text-muted-foreground"></div>
-          </SidebarFooter>
-        </Sidebar>
-        <div className="flex-1 overflow-auto">
+    <div className="flex min-h-screen w-full flex-col">
+    
+      <main className="flex flex-1 flex-col gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+        
+         
+                  <h2 className="flex items-center gap-2 text-lg font-semibold">
+                    <BarChartIcon className="h-6 w-6" />
+                    <span>{data.industryName} Industry Insights</span>
+                  </h2>
+            
+                 <Tabs value={activeSection} onValueChange={setActiveSection} defaultValue="overview" className="w-full">
+                    {/* Tab Triggers */}
+                    <TabsList className="grid w-full max-sm:h-fit  grid-cols-1 sm:grid-cols-2 md:grid-cols-5 mb-4  dark:dark-gradient light-gradient">
+                        {sections.map((section) => {
+                        const Icon = section.icon
+                        return (
+                            <TabsTrigger key={section.value} value={section.value} className="max-sm:justify-start">
+                            <Icon className="mr-2 h-4 w-4" />
+                            {section.label}
+                            </TabsTrigger>
+                        )
+                        })}
+                    </TabsList>
+
+                    {/* Separator */}
+                    <Separator className="my-4"/>
+
+                    {/* Tab Content Panes */}
+                    {sections.map((section) => {
+                        const SectionComponent = section.component
+                        return (
+                        <TabsContent key={section.value} value={section.value}>
+                            {/* Render the specific section component */}
+                            <SectionComponent data={data} />
+                        </TabsContent>
+                        )
+                    })}
+                </Tabs>
+        
 
 
-          <header className="flex my-2 h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-            <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-              <SidebarTrigger className="ml-1" />
-              <Separator
-                orientation="vertical"
-                className="mx-2 data-[orientation=vertical]:h-4"
-              />
-              <h1 className="text-base font-medium">{data.industryName}</h1>
-              <div className="ml-auto flex items-center gap-2 ">
-                <ThemeSelector />
-                <ModeToggle />
-              </div>
-            </div>
-          </header>
-
-
-
-
-
-
-
-
-          <main className="container mx-auto p-6">{renderSection()}</main>
-        </div>
-      </div>
-    </SidebarProvider>
+      </main>
+    </div>
   )
 }

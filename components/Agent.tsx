@@ -101,16 +101,16 @@ const Agent = ({
       });
 
       if (success && id) {
-        router.push(`/dashboard/interview/${interviewId}/feedback`);
+        router.push(`/dashboard/interviews/interview/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
-        router.push("/dashboard/interview");
+        router.push("/dashboard/interviews");
       }
     };
 
     if (callStatus === CallStatus.FINISHED) {
       if (type === "generate") {
-        router.push("/dashboard/interview");
+        router.push("/dashboard/interviews");
       } else {
         handleGenerateFeedback(messages);
       }

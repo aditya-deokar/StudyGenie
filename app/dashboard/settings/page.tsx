@@ -17,8 +17,7 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import OnboardingForm from "@/app/onboarding/_components/OnboardingForm"
-import { industries } from "@/data/OnboardingForm"
+
 
 export default function SettingsPage() {
   const { data, ui, toggleDarkMode, updateUserPreferences } = useDashboardStore()
@@ -114,7 +113,7 @@ export default function SettingsPage() {
                 <div className="flex flex-col md:flex-row gap-6">
                   <div className="flex flex-col items-center space-y-2">
                     <Avatar className="h-24 w-24">
-                      <AvatarImage src="/images/avatars/alex.png" alt={userInfo.name} />
+                      <AvatarImage src="" alt={userInfo.name} />
                       <AvatarFallback>{userInfo.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <Button variant="outline" size="sm">

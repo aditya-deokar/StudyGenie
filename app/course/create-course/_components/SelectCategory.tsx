@@ -33,7 +33,7 @@ const SelectCategory = () => {
               className={`flex flex-col p-5 border items-center rounded-xl hover:border-black hover:bg-secondary cursor-pointer
                     ${userCourseInput?.category == item.name && "border-black bg-secondary"}`}>
               <Image src={item.icon} width={50} height={50} alt={item.name} />
-              <h2 className='font-medium'>{item.name}</h2>
+              <h3 className='font-medium'>{item.name}</h3>
             </div>
           ))
         }

@@ -25,13 +25,13 @@ model User {
   skills     String[]
 
   assessments Assessment[]
-  
+  courses     CourseList[]
 }
 
 model Assessment {
   id             String  @id @default(cuid())
   userId         String
-  user           User    @relation(fields: [userId], references: [id])
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   quizScore      Float
   questions      Json[]
   category       String
@@ -62,7 +62,6 @@ model IndustryInsights {
 
 }
 
-
 model CourseList {
   id              String     @id @default(cuid())
   courseId        String  @unique
@@ -76,20 +75,21 @@ model CourseList {
   userProfileImage String?
   courseBanner    String  @default("/file.svg")
   publish         Boolean @default(false)
-  
-  chapters        Chapters[] @relation("CourseToChapters")
+
+  chapters        Chapters[] @relation("CourseToChapters") // Remove onDelete here
   assessments Assessment[]
+  users         User[]
 }
 
 model Chapters {
   id         Int    @id @default(autoincrement())
-  courseId   String 
+  courseId   String
   chapterId  Int
   content    Json
   videoId    String
 
-  course     CourseList @relation(fields: [courseId], references: [courseId], name: "CourseToChapters")
-  
+  course     CourseList @relation(name: "CourseToChapters", fields: [courseId], references: [courseId], onDelete: Cascade) // Add onDelete here
+
   @@index([courseId])
   @@unique([courseId, chapterId])
 }

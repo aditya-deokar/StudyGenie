@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter, Plus, Search } from "lucide-react";
 import Link from "next/link";
+import Image from 'next/image';
 
 const CourseHeader = () => {
   return (
@@ -32,6 +33,27 @@ const CourseHeader = () => {
                     Filter
                 </Button>
             </div>
+
+              <section className="card-cta dark:dark-gradient light-gradient ">
+                    <div className="flex flex-col gap-6 max-w-lg">
+                      <h2>"Instant Course Generation, Tailored to You"</h2>
+                      <p className="text-lg">
+                      Enter your topic and let our AI craft a smart, structured learning journey.
+                      </p>
+            
+                      <Button asChild variant={"outline"} className=" max-sm:w-full">
+                        <Link href="/course/create-course">Create Course</Link>
+                      </Button>
+                    </div>
+            
+                    <Image
+                      src="/robot.png"
+                      alt="robo-dude"
+                      width={400}
+                      height={400}
+                      className="max-sm:hidden"
+                    />
+                  </section>
     
     </>
   )

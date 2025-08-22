@@ -93,7 +93,7 @@ const Feedback = async ({ params }: RouteParams) => {
 
       <div className="buttons">
         <Button className="btn-secondary flex-1">
-          <Link href="/" className="flex w-full justify-center">
+          <Link href="/dashboard/interviews" className="flex w-full justify-center">
             <p className="text-sm font-semibold text-primary-200 text-center">
               Back to dashboard
             </p>
@@ -102,7 +102,7 @@ const Feedback = async ({ params }: RouteParams) => {
 
         <Button className="btn-primary flex-1">
           <Link
-            href={`/interview/${id}`}
+            href={`/dashboard/interviews/interview/${id}`}
             className="flex w-full justify-center"
           >
             <p className="text-sm font-semibold text-black text-center">

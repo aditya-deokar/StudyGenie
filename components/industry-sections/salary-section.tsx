@@ -55,10 +55,10 @@ export default function SalarySection({ data }: SalarySectionProps) {
 
   return (
     <div className="space-y-6">
-      <Card>
+      <Card className="bg-transparent dark:dark-gradient light-gradient">
         <CardHeader>
           <CardTitle>Salary Insights</CardTitle>
-          <CardDescription>Salary ranges for different roles in cloud computing (INR per annum)</CardDescription>
+          <CardDescription>Salary ranges for different roles in {data?.industryName} (INR per annum)</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="chart" className="space-y-4">
@@ -213,7 +213,7 @@ export default function SalarySection({ data }: SalarySectionProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="card-interview">
         <CardHeader>
           <CardTitle>Salary Factors</CardTitle>
           <CardDescription>{data.salaryFactors.description}</CardDescription>
@@ -222,7 +222,7 @@ export default function SalarySection({ data }: SalarySectionProps) {
           <div className="grid gap-6 md:grid-cols-3">
           {
             data.salaryFactors.factors.map((item, index)=>(
-              <div key={index} className="space-y-2">
+              <div key={index} className="space-y-2 ">
                 <h3 className="font-medium">{item.factorName}</h3>
                 <p className="text-sm text-muted-foreground">
                   {item.factorDescription}

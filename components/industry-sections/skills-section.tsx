@@ -36,10 +36,10 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
+        <Card className="bg-transparent dark:dark-gradient light-gradient">
           <CardHeader>
             <CardTitle>Skills Analysis</CardTitle>
-            <CardDescription>Current and recommended skills for cloud computing professionals</CardDescription>
+            <CardDescription>Current and recommended skills for {data?.industryName} professionals</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="current" className="space-y-4">
@@ -67,9 +67,9 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {data.topSkills.map((skill, index) => (
-                    <Badge key={index} variant="secondary">
-                      {skill}
-                    </Badge>
+                    <Badge key={index} variant="secondary" className="text-sm whitespace-break-spaces px-3 py-1 dark:dark-gradient light-gradient">
+                    {skill}
+                  </Badge>
                   ))}
                 </div>
               </TabsContent>
@@ -93,8 +93,8 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {data.recommendedSkills.map((skill, index) => (
-                    <Badge key={index} variant="outline">
-                      {skill}
+                    <Badge key={index} variant="secondary" className="text-sm whitespace-break-spaces px-3 py-1 dark:dark-gradient light-gradient">
+                    {skill}
                     </Badge>
                   ))}
                 </div>
@@ -103,10 +103,10 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-transparent dark:dark-gradient light-gradient">
           <CardHeader>
             <CardTitle>Career Progression</CardTitle>
-            <CardDescription>Common career paths in cloud computing</CardDescription>
+            <CardDescription>Common career paths in {data?.industryName}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {data.careerProgressionExamples.map((progression, index) => (
@@ -118,7 +118,7 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
                 <div className="ml-4 flex flex-wrap items-center">
                   {progression.split(" -> ").map((role, roleIndex, array) => (
                     <div key={roleIndex} className="flex items-center">
-                      <Badge variant="outline" className="whitespace-nowrap">
+                      <Badge variant="outline" className="whitespace-break-spaces">
                         {role}
                       </Badge>
                       {roleIndex < array.length - 1 && <div className="mx-2 text-muted-foreground">→</div>}
@@ -131,7 +131,7 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
         </Card>
       </div>
 
-      <Card>
+      <Card className="card-interview overflow-scroll">
         <CardHeader>
           <CardTitle>Entry Level Outlook</CardTitle>
           <CardDescription>Prospects for students and new graduates</CardDescription>
@@ -145,7 +145,7 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
                 <p className="font-medium">{data.entryLevelOutlook.prospects}</p>
               </div>
               <p className="text-sm text-muted-foreground">
-                Entry-level cloud computing roles are abundant with strong growth projected over the next 5 years.
+                Entry-level {data?.industryName} roles are abundant with strong growth projected over the next 5 years.
               </p>
             </div>
             <div className="space-y-2">

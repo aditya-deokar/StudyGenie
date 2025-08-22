@@ -43,8 +43,8 @@ export function ChapterNavigation({ chapter }: ChapterContentProps)  {
 
   console.log(chapter?.contentSections)
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      <Card>
+    <motion.div className="sticky top-16" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <Card className="dark:dark-gradient light-gradient">
         <CardHeader>
           <CardTitle>Chapter Navigation</CardTitle>
         </CardHeader>

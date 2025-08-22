@@ -2,24 +2,35 @@
 
 // import { industryData } from "@/lib/data";
 import prisma from "@/lib/prisma";
+import { IndustryDataSchema } from "@/lib/types";
+import { google } from "@ai-sdk/google";
 
 import { auth } from "@clerk/nextjs/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateObject } from "ai";
 
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
 });
 
 
+
 export const generateAIInsights = async (
   industry: string
-) : Promise<any>=> {
-
-
-  const prompt = `
+) : Promise<any>=>  {
+  try {
+    
+    const { object } = await generateObject({
+      model: google("gemini-2.0-flash-thinking-exp-01-21", {
+        structuredOutputs: false,
+        useSearchGrounding:true,
+      }),
+      schema: IndustryDataSchema,
+      prompt: `
   Analyze the current state of the ${industry} industry and provide insights in ONLY the following JSON format without any additional notes or explanations
   note-Analyze Indian Market State and (Major Cities in India)
   Format the response in a structured JSON format similar to the following example:
@@ -280,21 +291,17 @@ export const generateAIInsights = async (
     "Contribute to open-source data science projects."
   ]
 }
-`;
+ `});
 
-  const result = await model.generateContent(prompt);
-  
-  const response = result.response;
-  const text = response.text();
-  let cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
 
-  if (typeof cleanedText === "string") {
-    cleanedText = JSON.parse(cleanedText); // Validate stringified JSON
+    return object ;
+
+
+  } catch (error: any) {
+    console.error("Error generating Industry Insights content:", error);
+    throw new Error(error.message || "Failed to generate Industry Insights content.");
   }
-  return cleanedText;
 };
-
-
 
 
 export async function getIndustryInsights(){

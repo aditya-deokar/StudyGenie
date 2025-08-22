@@ -11,96 +11,94 @@ type OverviewSectionProps = {
 }
 
 export default function OverviewSection({ data }: OverviewSectionProps) {
-
-  // console.log(  "data- "+ data);
-  // Calculate average median salary
   const avgMedianSalary = data?.salaryRange?.reduce((sum, item) => sum + item.median, 0) / data?.salaryRange?.length
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+    <div className="space-y-8">
+
+
+
+      <section className="card-cta dark:dark-gradient light-gradient flex flex-col gap-6 items-start">
+          <h2>Industry Overview</h2>
+          
+          <p className="text-muted-foreground text-justify">{data?.overview}</p>
+      </section>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 card-interview ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Growth Rate</CardTitle>
-            <TrendingUpIcon className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-primary">Growth Rate</CardTitle>
+            <TrendingUpIcon className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data?.growthRate}%</div>
-            <p className="text-xs text-muted-foreground">Annual industry growth</p>
+            <div className="text-3xl font-extrabold ">{data?.growthRate}%</div>
+            <p className="text-sm text-muted-foreground">Annual industry growth</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 card-interview">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Demand Level</CardTitle>
-            <BriefcaseIcon className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-primary">Demand Level</CardTitle>
+            <BriefcaseIcon className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data?.demandLevel}</div>
-            <p className="text-xs text-muted-foreground">Current market demand</p>
+            <div className="text-3xl font-extrabold ">{data?.demandLevel}</div>
+            <p className="text-sm text-muted-foreground">Current market demand</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 card-interview">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Salary</CardTitle>
-            <BarChart3Icon className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-primary">Avg. Salary</CardTitle>
+            <BarChart3Icon className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(avgMedianSalary)}</div>
-            <p className="text-xs text-muted-foreground">Average median salary</p>
+            <div className="text-3xl font-extrabold ">{formatCurrency(avgMedianSalary)}</div>
+            <p className="text-sm text-muted-foreground">Average median salary</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 card-interview">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Market Outlook</CardTitle>
-            <BuildingIcon className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-primary">Market Outlook</CardTitle>
+            <BuildingIcon className="h-5 w-5 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data?.marketOutlook}</div>
-            <p className="text-xs text-muted-foreground">Future industry outlook</p>
+            <div className="text-3xl font-extrabold ">{data?.marketOutlook}</div>
+            <p className="text-sm text-muted-foreground">Future industry outlook</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Industry Overview</CardTitle>
-          <CardDescription>Cloud Computing in India</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">{data?.overview}</p>
-        </CardContent>
-      </Card>
+    
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardHeader>
-            <CardTitle>Top Skills</CardTitle>
-            <CardDescription>Most in-demand skills for cloud computing</CardDescription>
+            <CardTitle className="text-lg font-bold text-primary">Top Skills</CardTitle>
+            <CardDescription className="text-muted-foreground">Most in-demand skills for {data?.industryName}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {data?.topSkills?.map((skill, index) => (
-                <Badge key={index} variant="secondary">
+                <Badge key={index} variant="secondary" className="text-sm whitespace-break-spaces px-3 py-1 dark:dark-gradient light-gradient">
                   {skill}
                 </Badge>
               ))}
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardHeader>
-            <CardTitle>Key Companies Hiring</CardTitle>
-            <CardDescription>Major employers in the cloud computing industry</CardDescription>
+            <CardTitle className="text-lg font-bold text-primary">Key Companies Hiring</CardTitle>
+            <CardDescription className="text-muted-foreground">Major employers in the {data?.industryName} industry</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {data?.keyCompaniesHiring?.slice(0, 12).map((company, index) => (
-                <Badge key={index} variant="outline">
+                <Badge key={index} variant="outline" className="text-sm px-3 py-1">
                   {company}
                 </Badge>
               ))}
               {data?.keyCompaniesHiring?.length > 12 && (
-                <Badge variant="outline">+{data?.keyCompaniesHiring?.length - 12} more</Badge>
+                <Badge variant="outline" className="text-sm px-3 py-1">+{data?.keyCompaniesHiring?.length - 12} more</Badge>
               )}
             </div>
           </CardContent>

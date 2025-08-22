@@ -174,7 +174,7 @@ export async function getChapters(courseId: string) {
       return chapters;
   } catch (error) {
       console.error("Error fetching chapters:", error);
-      return []; // Or throw the error, depending on your error handling strategy
+      return []; 
   }
 }
 

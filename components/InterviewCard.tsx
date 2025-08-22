@@ -39,13 +39,13 @@ const InterviewCard = async ({
   ).format("MMM D, YYYY");
 
   return (
-    <div className="bg-secondary border-primary/50 border rounded-bl-xl rounded-tr-xl w-[360px] max-sm:w-full min-h-96">
+    <div className="border rounded-bl-xl rounded-tr-xl w-[360px] max-sm:w-full min-h-96 transition-all hover:shadow-xl">
       <div className="card-interview">
         <div>
           {/* Type Badge */}
           <div
             className={cn(
-              "absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg bg-background/60",
+              "absolute top-0 right-0 w-fit px-4 py-2 border-b-1 border-l-1 rounded-bl-lg bg-background/60",
               // badgeColor
             )}
           >
@@ -92,7 +92,7 @@ const InterviewCard = async ({
         <div className="flex flex-row justify-between">
           <DisplayTechIcons techStack={techstack} />
 
-          <Button variant={"default"}>
+          <Button variant={"default"} className="dark:btn-primary">
             <Link
               href={
                 feedback

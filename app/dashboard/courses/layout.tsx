@@ -17,9 +17,7 @@ const CourseLayout: React.FC<LayoutProps> = ({ children }) => {
     return (
 
 
-        <div
-         
-        >
+        <div className="space-y-6">
             <CourseHeader/>
 
             <Suspense fallback={<BarLoader className="mt-4" width={"100%"} color="gray" />}>

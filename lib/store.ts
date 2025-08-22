@@ -6,6 +6,8 @@ import placeholderData, {
   generateActivityHeatmapData,
 } from "./placeholder-data"
 import { ActivityHeatmapData } from "./types"
+import { quizData } from "@/data/AssessmentData"
+import { Question } from "@/types/zodAssesmentSchema"
 // import type { ActivityHeatmapData } from "./types"
 
 // Update the DashboardState interface to include activityHeatmap
@@ -351,3 +353,154 @@ export const useStore = create<CourseState>()(
 
 
 
+
+
+
+interface QuizState {
+  // Quiz state
+  currentQuestionIndex: number
+  answers: Record<string, string>
+  flaggedQuestions: string[]
+  timeRemaining: number
+  quizStarted: boolean
+  quizCompleted: boolean
+
+  // Quiz data
+  questions: Question[]
+
+  // Actions
+  startQuiz: () => void
+  setAnswer: (questionId: string, answerId: string) => void
+  nextQuestion: () => void
+  previousQuestion: () => void
+  goToQuestion: (index: number) => void
+  toggleFlagQuestion: (questionId: string) => void
+  updateTimeRemaining: (time: number) => void
+  completeQuiz: () => void
+  resetQuiz: () => void
+  setQuestions: (questions:Question[])=> void,
+  // Computed values
+  getScore: () => { correct: number; total: number; percentage: number }
+  getQuestionStatus: () => { answered: number; total: number }
+}
+
+export const useQuizStore = create<QuizState>()(
+  persist(
+    (set, get) => ({
+      // Initial state
+      currentQuestionIndex: 0,
+      answers: {},
+      flaggedQuestions: [],
+      timeRemaining: 30 * 60, // 30 minutes in seconds
+      quizStarted: false,
+      quizCompleted: false,
+      questions: [],
+
+      
+
+      // Actions
+
+      setQuestions: (questions:Question[]) =>
+        set({
+          questions,
+      }),
+
+      startQuiz: () =>
+        set({
+          quizStarted: true,
+          timeRemaining: 30 * 60,
+          answers: {},
+          flaggedQuestions: [],
+          currentQuestionIndex: 0,
+          quizCompleted: false,
+        }),
+
+      setAnswer: (questionId, answerId) =>
+        set((state) => ({
+          answers: { ...state.answers, [questionId]: answerId },
+        })),
+
+      nextQuestion: () =>
+        set((state) => ({
+          currentQuestionIndex: Math.min(state.currentQuestionIndex + 1, state.questions.length - 1),
+        })),
+
+      previousQuestion: () =>
+        set((state) => ({
+          currentQuestionIndex: Math.max(state.currentQuestionIndex - 1, 0),
+        })),
+
+      goToQuestion: (index) =>
+        set({
+          currentQuestionIndex: index,
+        }),
+
+      toggleFlagQuestion: (questionId) =>
+        set((state) => ({
+          flaggedQuestions: state.flaggedQuestions.includes(questionId)
+            ? state.flaggedQuestions.filter((id) => id !== questionId)
+            : [...state.flaggedQuestions, questionId],
+        })),
+
+      updateTimeRemaining: (time) =>
+        set({
+          timeRemaining: time,
+        }),
+
+      completeQuiz: () =>
+        set({
+          quizCompleted: true,
+        }),
+
+      resetQuiz: () =>
+        set({
+          currentQuestionIndex: 0,
+          answers: {},
+          flaggedQuestions: [],
+          timeRemaining: 30 * 60,
+          quizStarted: false,
+          quizCompleted: false,
+        }),
+
+      // Computed values
+      getScore: () => {
+        const state = get()
+        const correct = state.questions.filter((q) => state.answers[q.id] === q.correctAnswerId).length
+
+        return {
+          correct,
+          total: state.questions.length,
+          percentage: Math.round((correct / state.questions.length) * 100),
+        }
+      },
+
+      getQuestionStatus: () => {
+        const state = get()
+        return {
+          answered: Object.keys(state.answers).length,
+          total: state.questions.length,
+        }
+      },
+
+    
+
+    }),
+
+
+    {
+      name: "quiz-storage",
+      partialize: (state) => ({
+        // persist what you need
+        answers: state.answers,
+        flaggedQuestions: state.flaggedQuestions,
+        currentQuestionIndex: state.currentQuestionIndex,
+        timeRemaining: state.timeRemaining,
+        quizStarted: state.quizStarted,
+        quizCompleted: state.quizCompleted,
+      }),
+    },
+
+
+
+  ),
+)

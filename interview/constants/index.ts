@@ -156,6 +156,84 @@ End the conversation on a polite and positive note.
   },
 };
 
+
+export const aiTeacher: CreateAssistantDTO = {
+  name: "AITeacher",
+  // This first message will be dynamically overridden from the frontend,
+  // but it's good to have a default.
+  firstMessage: "Hello! I'm your AI Teacher. Are you ready to start our lesson?",
+  transcriber: {
+    provider: "deepgram",
+    model: "nova-2",
+    language: "en",
+  },
+  voice: {
+    // A friendly and clear voice is good for a teacher.
+    provider: "11labs",
+    voiceId: "y6Ao4Y93UrnTbmzdVlFc", // Changed to a different voice, e.g., 'Mimi'
+    stability: 0.5,
+    similarityBoost: 0.75,
+  },
+  model: {
+    provider: "openai",
+    model: "gpt-4-turbo", // Using a powerful model is key for teaching logic
+    messages: [
+      {
+        role: "system",
+        content: `You are an expert, patient, and encouraging AI Teacher. Your primary goal is to help a student named {{studentName}} understand the concepts in a specific chapter of their course.
+
+        **//-- CURRENT LESSON CONTEXT --//**
+        - **Chapter Title:** {{chapterTitle}}
+        - **Student's Prior Progress:** You have the following notes on {{studentName}}'s progress: "{{studentProgress}}". Use this to tailor your conversation. For example, if they struggled with a concept before, you can offer to review it.
+        - **Core Chapter Material:** You MUST base your explanations and answers on the following chapter text. Do not introduce outside concepts unless the student asks for a real-world analogy.
+        
+        <chapterContext>
+        {{chapterContext}}
+        </chapterContext>
+
+        **//-- YOUR TEACHING METHODOLOGY --//**
+        1.  **Start the Lesson:** Greet the student by name and introduce the chapter's main topic.
+        2.  **Explain Concepts Simply:** Break down complex topics into smaller, easy-to-understand parts. Use the provided <chapterContext>.
+        3.  **Be Interactive:** After explaining a concept, ask a question to check for understanding (e.g., "Does that make sense?", "Can you try explaining that back to me in your own words?").
+        4.  **Listen and Adapt:** Pay close attention to the student's responses. If they are confused, try re-explaining the concept in a different way or providing an example from the <chapterContext>.
+        5.  **Stay Focused:** Gently guide the conversation back to the chapter material if the student goes off-topic.
+        6.  **Maintain Persona:** Be consistently positive, patient, and encouraging. Never sound judgmental or robotic. Use short, conversational sentences suitable for a voice interaction.
+        7.  **Conclude the Lesson:** When you've covered the main points or the student wants to end, provide a brief summary of what was learned and thank them for their time.
+        `,
+      },
+    ],
+  },
+};
+
+
+// export const getAITeacherAssistant = (): CreateAssistantDTO => ({
+//   name: "AITeacher",
+//   // This first message will be overridden by the client before starting the call.
+//   firstMessage: "Hello! I'm your AI Teacher. Let's begin our lesson.",
+//   transcriber: {
+//     provider: "deepgram",
+//     model: "nova-2",
+//     language: "en",
+//   },
+//   voice: {
+//     provider: "11labs",
+//     // Using a known stable voice ID like 'Mimi'. Invalid IDs can cause setup failures.
+//     voiceId: "y6Ao4Y93UrnTbmzdVlFc", 
+//   },
+//   model: {
+//     provider: "openai",
+//     model: "gpt-4-turbo",
+//     // This message array will be completely replaced by the client with dynamic,
+//     // context-rich content before the call starts.
+//     messages: [
+//       {
+//         role: "system",
+//         content: "You are a helpful AI assistant.", // Basic placeholder
+//       },
+//     ],
+//   },
+// });
+
 export const feedbackSchema = z.object({
   totalScore: z.number(),
   categoryScores: z.tuple([

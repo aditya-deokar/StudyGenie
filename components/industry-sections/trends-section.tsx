@@ -32,7 +32,7 @@ export default function TrendsSection({ data }: TrendsSectionProps) {
 
   return (
     <div className="space-y-6">
-      <Card>
+      <Card className="bg-transparent dark:dark-gradient light-gradient">
         <CardHeader>
           <CardTitle>Market Growth Projections</CardTitle>
           <CardDescription>Projected growth of {data.industryName}</CardDescription>
@@ -86,7 +86,7 @@ export default function TrendsSection({ data }: TrendsSectionProps) {
           <p>{data.marketGrowthProjections.description}</p>
           <div className="mt-4 text-sm text-muted-foreground">
             <p>
-              The Indian cloud computing market is projected to grow at a CAGR of {data.growthRate}% through 2027,
+              The Indian {data?.industryName} market is projected to grow at a CAGR of {data.growthRate}% through 2027,
               creating substantial job opportunities across various specializations.
             </p>
            
@@ -95,7 +95,7 @@ export default function TrendsSection({ data }: TrendsSectionProps) {
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
+        <Card className="dark:dark-gradient light-gradient">
           <CardHeader>
             <CardTitle>Key Industry Trends</CardTitle>
             <CardDescription>Emerging trends shaping {data.industryName}</CardDescription>
@@ -114,7 +114,7 @@ export default function TrendsSection({ data }: TrendsSectionProps) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="card-interview overflow-scroll">
           <CardHeader>
             <CardTitle>Industry Outlook</CardTitle>
             <CardDescription>Future prospects for {data.industryName}</CardDescription>

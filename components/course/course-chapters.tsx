@@ -26,7 +26,7 @@ export function CourseChapters({courseId, chapters, className }: CourseChaptersP
           {chapters?.map((chapter, index) => (
             <div
               key={index}
-              className="flex flex-col gap-2 rounded-lg border p-4 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-2 rounded-lg border p-4 sm:flex-row sm:items-center sm:justify-between dark:dark-gradient light-gradient"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -35,7 +35,7 @@ export function CourseChapters({courseId, chapters, className }: CourseChaptersP
                 </div>
                 <p className="text-sm text-muted-foreground line-clamp-2">{chapter.About}</p>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 text-primary/50">
                     <Clock className="h-3.5 w-3.5" />
                     <span>{chapter.duration}</span>
                   </div>
@@ -44,7 +44,7 @@ export function CourseChapters({courseId, chapters, className }: CourseChaptersP
                   </div>
                 </div>
               </div>
-              <Button asChild size="sm" className="mt-2 sm:mt-0">
+              <Button asChild variant="default" size="sm" className="mt-2 sm:mt-0">
                 <Link href={`/course/dashboard/${courseId}/chapters/${index +1}`} className="flex items-center gap-1">
                   <Play className="h-3.5 w-3.5" />start
                   {/* {chapter.progress > 0 && chapter.progress < 100 ? "Continue" : chapter.completed ? "Review" : "Start"} */}

@@ -187,9 +187,7 @@
   h3 {
     @apply text-2xl font-semibold;
   }
-  ul {
-    @apply list-disc list-inside;
-  }
+ 
  
 }
 
@@ -388,6 +386,11 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+.blur{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 /* Gradient text */
 .gradient-text {
   background-clip: text;
@@ -441,17 +444,23 @@ body {
   }
 
   .card-border {
-    @apply  p-0.5 rounded-2xl w-fit;
+    @apply border-gradient p-0.5 rounded-2xl w-fit;
   }
 
   .card {
-    @apply  rounded-2xl min-h-full;
+    @apply dark:dark-gradient rounded-2xl min-h-full;
   }
 
   .form {
     @apply w-full;
 
-   
+    .label {
+      @apply !text-light-100 !font-normal;
+    }
+
+    .input {
+      @apply !bg-dark-200 !rounded-full !min-h-12 !px-5 placeholder:!text-light-100;
+    }
 
     .btn {
       @apply !w-full !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !min-h-10 !font-bold !px-5 cursor-pointer;
@@ -466,7 +475,7 @@ body {
     }
 
     .card-interviewer {
-      @apply flex-center flex-col gap-2 p-7 h-[400px]  rounded-lg border-2 border-primary-200/50 flex-1 sm:basis-1/2 w-full;
+      @apply flex-center flex-col gap-2 p-7 h-[400px] dark:blue-gradient-dark rounded-lg border-2 border-primary-200/50 flex-1 sm:basis-1/2 w-full;
     }
 
     .avatar {
@@ -478,11 +487,11 @@ body {
     }
 
     .card-border {
-      @apply  p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden;
+      @apply dark:border-gradient p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden;
     }
 
     .card-content {
-      @apply flex flex-col gap-2 justify-center items-center p-7  rounded-2xl min-h-full;
+      @apply flex flex-col gap-2 justify-center items-center p-7 dark:dark-gradient rounded-2xl min-h-full;
     }
   }
 
@@ -490,7 +499,7 @@ body {
     @apply border-gradient p-0.5 rounded-2xl w-full;
 
     .transcript {
-      @apply dark-gradient rounded-2xl  min-h-12 px-5 py-3 flex items-center justify-center;
+      @apply dark:dark-gradient rounded-2xl  min-h-12 px-5 py-3 flex items-center justify-center;
 
       p {
         @apply text-lg text-center text-white;
@@ -515,7 +524,7 @@ body {
   }
 
   .card-cta {
-    @apply flex flex-row  rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
+    @apply flex flex-row dark:blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
   }
 
   .interviews-section {
@@ -535,7 +544,7 @@ body {
   }
 
   .card-interview {
-    @apply  rounded-2xl min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between;
+    @apply dark:dark-gradient light-gradient rounded-bl-xl rounded-tr-xl min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between;
 
     .badge-text {
       @apply text-sm font-semibold capitalize;
@@ -544,7 +553,10 @@ body {
 }
 
 @utility dark-gradient {
-  @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D];
+  @apply bg-gradient-to-b from-[#1A1C20] to-primary/5  ;
+}
+@utility light-gradient {
+  @apply bg-gradient-to-tl from-primary/10 to-primary-foreground/10  ;
 }
 
 @utility border-gradient {
@@ -552,7 +564,7 @@ body {
 }
 
 @utility pattern {
-  @apply bg-[url('/pattern.png')] bg-top bg-no-repeat;
+  @apply bg-[url('/pattern.png')] bg-top bg-no-repeat h-full;
 }
 
 @utility blue-gradient-dark {

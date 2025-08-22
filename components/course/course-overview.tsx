@@ -13,7 +13,7 @@ export function CourseOverview({courseData, className }: CourseOverviewProps) {
   
 
   return (
-    <Card className={cn("", className)}>
+    <Card className={cn("dark:dark-gradient light-gradient", className)}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -26,18 +26,18 @@ export function CourseOverview({courseData, className }: CourseOverviewProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 text-primary/80">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 " />
             <span className="text-sm">{courseData?.courseOutput?.duration}</span>
           </div>
           <div className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-muted-foreground" />
+            <BookOpen className="h-4 w-4" />
             <span className="text-sm">{courseData?.courseOutput?.noOfChapters} Chapters</span>
           </div>
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm">{courseData?.category}</span>
+            <GraduationCap className="h-4 w-4 " />
+            <span className="text-sm ">{courseData?.category}</span>
           </div>
         </div>
       </CardContent>
