@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark, neobrutalism } from "@clerk/themes";
+import { Toaster } from "sonner";
 
 
 
@@ -65,6 +66,7 @@ export default async function RootLayout({
         </ThemeProvider>
 
         </ClerkProvider>
+        <Toaster />
       </body>
     </html>
   );

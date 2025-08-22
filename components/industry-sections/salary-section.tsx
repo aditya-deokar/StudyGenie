@@ -18,7 +18,7 @@ export default function SalarySection({ data }: SalarySectionProps) {
 
   // Format data for the bar chart
   const barChartData = data.salaryRange.map((item) => ({
-    name: item.role.split(" ")[0],
+    name: item.role,
     min: item.min,
     median: item.median,
     max: item.max,
@@ -67,63 +67,10 @@ export default function SalarySection({ data }: SalarySectionProps) {
               <TabsTrigger value="table">Table View</TabsTrigger>
             </TabsList>
             <TabsContent value="chart" className="space-y-4">
-              <div className="flex justify-end space-x-2">
-                <TabsList className="h-8">
-                  <TabsTrigger
-                    value="bar"
-                    className="h-8 px-3"
-                    onClick={() => setChartView("bar")}
-                    data-state={chartView === "bar" ? "active" : "inactive"}
-                  >
-                    Range
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="comparison"
-                    className="h-8 px-3"
-                    onClick={() => setChartView("comparison")}
-                    data-state={chartView === "comparison" ? "active" : "inactive"}
-                  >
-                    Comparison
-                  </TabsTrigger>
-                </TabsList>
-              </div>
+              
 
               {chartView === "bar" ? (
-                // <ChartContainer config={chartConfig} className="h-[400px]">
-                //   <ResponsiveContainer width="100%" height="100%">
-                //     <BarChart data={barChartData} margin={{ top: 20, right: 30, left: 20, bottom: 70 }}>
-                //       <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                //       <XAxis dataKey="name" angle={-45} textAnchor="end" height={70} tick={{ fontSize: 12 }} />
-                //       <YAxis tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`} width={80} />
-                //       <Tooltip
-                //         content={({ active, payload, label }) => {
-                //           if (active && payload && payload.length) {
-                //             const data = payload[0].payload
-                //             return (
-                //               <div className="rounded-lg border bg-background p-2 shadow-sm">
-                //                 <div className="font-medium">{data.fullName}</div>
-                //                 <div className="text-xs text-muted-foreground">{data.location}</div>
-                //                 <div className="mt-1 grid grid-cols-2 gap-2">
-                //                   <div className="text-xs">Min: {formatCurrency(data.min)}</div>
-                //                   <div className="text-xs">Max: {formatCurrency(data.max)}</div>
-                //                   <div className="col-span-2 text-xs font-medium">
-                //                     Median: {formatCurrency(data.median)}
-                //                   </div>
-                //                 </div>
-                //               </div>
-                //             )
-                //           }
-                //           return null
-                //         }}
-                //       />
-                //       <Legend />
-                //       <Bar dataKey="min" name="Minimum" fill="hsl(var(--chart-1))" />
-                //       <Bar dataKey="median" name="Median" fill="hsl(var(--chart-2))" />
-                //       <Bar dataKey="max" name="Maximum" fill="hsl(var(--chart-3))" />
-                //     </BarChart>
-                //   </ResponsiveContainer>
-                // </ChartContainer>
-
+                
                 <ChartContainer config={chartConfig} className="h-[450px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -139,12 +86,12 @@ export default function SalarySection({ data }: SalarySectionProps) {
             >
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
               <XAxis
-                dataKey="role"
+                dataKey="name"
                 tickLine={false}
-                // tickMargin={10} 
+                tickMargin={10} 
                 axisLine={false}
-                angle={-45} 
-                textAnchor="end" 
+                // angle={-45} 
+                // textAnchor="end" 
                 height={70} 
                 tick={{ fontSize: 12 }} 
              
