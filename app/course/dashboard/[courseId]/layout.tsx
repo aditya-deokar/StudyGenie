@@ -8,6 +8,8 @@ import { dark, neobrutalism } from "@clerk/themes";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/course/dashboard-sidebar";
 import { Header } from "@/components/header";
+import { Suspense } from "react";
+import { BarLoader } from "react-spinners";
 
 
 
@@ -25,7 +27,10 @@ export default async function CourseDashboardLayout({
 
 
   return (
-    <>
+  
+
+<Suspense fallback={<BarLoader className="mt-4" width={"100%"} color="gray" />}>
+
     <SidebarProvider>
       <div className="flex w-full min-h-screen flex-col">
         
@@ -47,6 +52,7 @@ export default async function CourseDashboardLayout({
       </div>
     </SidebarProvider>
     
-    </>
+    
+    </Suspense>
   );
 }

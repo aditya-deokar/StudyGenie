@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
-import { ClipboardCopy } from 'lucide-react';
+import { BookOpenText, ClipboardCopy } from 'lucide-react';
 import CourseBasicInfo from '../_components/CourseBasicInfo';
 import { CourseListType } from '@/types/courseList';
 import { getCourseByUser } from '@/actions/createCourse';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 interface FinishScreenPageProps {
   courseId: string;
@@ -45,25 +47,19 @@ const FinishScreenPage: React.FC<FinishScreenPageProps> = ({ courseId }) => {
     <div className='px-10 md:px-20 lg:px-44 my-7 text-primary'>
       <h2 className='text-center font-bold text-2xl my-3'>Congrats! Your Course is ready</h2>
 
-      <h2 className='mt-3'>Course URL:</h2>
-      <h2 className='text-center text-gray-400 border p-2 rounded flex justify-evenly items-center gap-2'>
-        {`${process.env.NEXT_PUBLIC_HOST_NAME}/course/view/${course?.courseId}`}
-
-        <ClipboardCopy
-          className='h-5 w-5 hover:text-gray-900 cursor-pointer'
-          onClick={async () => {
-            if (course?.courseId) {
-              await navigator.clipboard.writeText(
-                `${process.env.NEXT_PUBLIC_HOST_NAME}/course/view/${course.courseId}`
-              );
-            }
-          }}
-        />
-      </h2>
+     
 
       {course && (
         <CourseBasicInfo course={course} refreshData={() => console.log('refresh')} />
       )}
+
+      <Link href={`/course/dashboard/${course?.courseId}`} className="w-full">
+          <Button variant="outline" className="w-full">
+            <BookOpenText className="mr-2 h-4 w-4" />
+            View Course
+          </Button>
+      </Link>
+      
     </div>
   );
 };
