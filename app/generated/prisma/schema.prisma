@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String            @id @default(uuid())
+  clerkUserId      String            @unique
+  email            String            @unique
+  name             String?
+  imageUrl         String?
+  industry         String?
+  industryInsights IndustryInsights? @relation(fields: [industry], references: [industry])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bio        String?
+  experience Int?
+  skills     String[]
+
+  assessments Assessment[]
+}
+
+model Assessment {
+  id             String  @id @default(cuid())
+  userId         String
+  user           User    @relation(fields: [userId], references: [id])
+  quizScore      Float
+  questions      Json[]
+  category       String
+  improvementTip String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  courseList   CourseList? @relation(fields: [courseListId], references: [courseId])
+  courseListId String?
+
+  @@index([userId])
+  @@index([courseListId])
+}
+
+model IndustryInsights {
+  id          String      @id @default(cuid())
+  industry    String      @unique
+  user        User[]
+  salaryRange Json
+  // Array of { role:string , min:float, max:float , median:float, location:string}
+  growthRate  Float
+  demandLevel DemandLevel
+  topSkills   String[]
+
+  marketOutlook     MarketOutlook
+  keyTrends         String[]
+  recommendedSkills String[]
+
+  lastUpdated DateTime @default(now())
+  nextUpdate  DateTime
+
+  @@index([industry])
+}
+
+enum DemandLevel {
+  HIGH
+  MEDIUM
+  NEGATIVE
+}
+
+enum MarketOutlook {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+model CourseList {
+  id               String  @id @default(cuid())
+  courseId         String  @unique
+  name             String
+  category         String
+  level            String
+  includeVideo     String  @default("Yes")
+  courseOutput     Json
+  createdBy        String
+  userName         String?
+  userProfileImage String?
+  courseBanner     String  @default("/file.svg")
+  publish          Boolean @default(false)
+
+  chapters    Chapters[]   @relation("CourseToChapters")
+  assessments Assessment[]
+}
+
+model Chapters {
+  id        Int    @id @default(autoincrement())
+  courseId  String
+  chapterId Int
+  content   Json
+  videoId   String
+
+  course CourseList @relation(fields: [courseId], references: [courseId], name: "CourseToChapters")
+
+  @@unique([courseId, chapterId])
+  @@index([courseId])
+}

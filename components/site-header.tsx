@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeSelector } from "./theme-selector";
 import { ModeToggle } from "./ui/mode-toggle";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export function SiteHeader() {
   return (
@@ -16,6 +17,18 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2 ">
           <ThemeSelector />
           <ModeToggle />
+          <SignedIn>
+            <UserButton 
+              appearance={{
+                elements:{
+                  avatarBox:"w-10 h-10",
+                  userButtonPopoverCard:"shadow-xl",
+                  userPreviewMainIdentifier:"font-semibold"
+                }
+              }}
+              afterSignOutUrl='/dashboard'
+              />
+          </SignedIn>
         </div>
       </div>
     </header>

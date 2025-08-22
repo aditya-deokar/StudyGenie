@@ -7,16 +7,17 @@ import { Button } from "../ui/button"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useToast } from "../ui/use-toast"
-import { chapterData } from "@/lib/course-data"
+// import { chapterData } from "@/lib/course-data"
 import { useStore } from "@/lib/store"
 import { AlertCircle, CheckCircle, ChevronRight, XCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
+import { ContentType } from "@/types/chapters"
 
 interface ChapterQuizProps {
-  chapterId: string
+  chapter: ContentType
 }
 
-export function ChapterQuiz({ chapterId }: ChapterQuizProps) {
+export function ChapterQuiz({ chapter }: ChapterQuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -24,8 +25,8 @@ export function ChapterQuiz({ chapterId }: ChapterQuizProps) {
   const { toast } = useToast()
   const { completeQuiz, completedQuizzes } = useStore()
 
-  const isQuizCompleted = completedQuizzes.includes(chapterId)
-  const questions = chapterData.assessmentQuestions || []
+  const isQuizCompleted = completedQuizzes.includes(chapter)
+  const questions = chapter.assessmentQuestions || []
   const currentQuestion = questions[currentQuestionIndex]
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -51,7 +52,7 @@ export function ChapterQuiz({ chapterId }: ChapterQuizProps) {
       setIsSubmitted(true)
 
       if (!isQuizCompleted) {
-        completeQuiz(chapterId, finalScore)
+        completeQuiz(chapter, finalScore)
         toast({
           title: "Quiz completed!",
           description: `You scored ${finalScore}% on this quiz.`,
@@ -113,7 +114,7 @@ export function ChapterQuiz({ chapterId }: ChapterQuizProps) {
                 </div>
 
                 <div className="space-y-4">
-                  {questions.map((question, index) => {
+                  {questions?.map((question, index) => {
                     const isCorrect = selectedAnswers[index] === question.correctAnswerIndex
 
                     return (
@@ -172,7 +173,7 @@ export function ChapterQuiz({ chapterId }: ChapterQuizProps) {
                   value={selectedAnswers[currentQuestionIndex]?.toString()}
                   onValueChange={(value:any) => handleAnswerSelect(Number.parseInt(value))}
                 >
-                  {currentQuestion.options.map((option, index) => (
+                  {currentQuestion?.options?.map((option, index) => (
                     <div key={index} className="flex items-center space-x-2 py-2">
                       <RadioGroupItem value={index.toString()} id={`option-${index}`} />
                       <Label htmlFor={`option-${index}`} className="text-sm">

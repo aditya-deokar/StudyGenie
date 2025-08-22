@@ -1,30 +1,24 @@
 import type { Metadata } from "next";
-import { Nunito, Inter, PT_Sans } from "next/font/google";
+import {  DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ActiveThemeProvider } from "@/components/active-theme";
 import { cookies } from "next/headers";
 import { cn } from "@/lib/utils";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark, neobrutalism } from "@clerk/themes";
+
+
 
 const META_THEME_COLORS = {
   light: "#ffffff",
   dark: "#09090b",
 };
 
-
-
-const nunito = Nunito({
-variable: "--font-nunito",
-subsets: ["latin"],
+const dmsans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
 });
-
-const ptSans = PT_Sans({
-variable: "--font-pt-sans",
-subsets: ["latin"],
-weight: ["400", "700"],
-});
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -44,11 +38,15 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `bg-background overscroll-none ${inter.className} relative antialiased`,
+          `bg-background overscroll-none ${dmsans.className} relative antialiased`,
           activeThemeValue ? `theme-${activeThemeValue}` : "",
           isScaled ? "theme-scaled" : ""
         )}
       >
+
+<ClerkProvider appearance={{
+      baseTheme:dark
+    }}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -65,6 +63,8 @@ export default async function RootLayout({
             {children}
           </ActiveThemeProvider>
         </ThemeProvider>
+
+        </ClerkProvider>
       </body>
     </html>
   );

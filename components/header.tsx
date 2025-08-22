@@ -17,6 +17,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { ThemeSelector } from "./theme-selector"
 import { ModeToggle } from "./ui/mode-toggle"
+import { SignedIn, UserButton } from "@clerk/nextjs"
 
 export function Header() {
   const { data, markNotificationAsRead } = useDashboardStore()
@@ -24,15 +25,12 @@ export function Header() {
   const unreadCount = notifications.filter((n) => !n.isRead).length
 
   return (
-    <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
+    <header className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:px-6">
       <div className="hidden md:block md:w-32 lg:w-64">
         <span className="text-lg font-semibold">Dashboard</span>
       </div>
 
-      <div className="relative flex-1">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input type="search" placeholder="Search..." className="w-full bg-background pl-8 md:w-2/3 lg:w-1/2" />
-      </div>
+     
 
       <div className="flex items-center gap-2">
         <ThemeSelector />
@@ -85,6 +83,23 @@ export function Header() {
             )}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <Button variant="outline" size="icon" className="relative">
+          <SignedIn>
+              <UserButton 
+                appearance={{
+                  elements:{
+                    avatarBox:"w-10 h-10",
+                    userButtonPopoverCard:"shadow-xl",
+                    userPreviewMainIdentifier:"font-semibold"
+                  }
+                }}
+                afterSignOutUrl='/dashboard'
+                />
+            </SignedIn>
+        </Button>
+
+        
       </div>
     </header>
   )

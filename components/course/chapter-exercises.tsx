@@ -6,15 +6,16 @@ import { Button } from "../ui/button"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { useToast } from "../ui/use-toast"
-import { chapterData } from "@/lib/course-data"
+
 import { useStore } from "@/lib/store"
 import { CheckCircle, Save } from "lucide-react"
+import { ContentType } from "@/types/chapters"
 
 interface ChapterExercisesProps {
-  chapterId: string
+  chapter: ContentType 
 }
 
-export function ChapterExercises({ chapterId }: ChapterExercisesProps) {
+export function ChapterExercises({ chapter }: ChapterExercisesProps) {
   const { toast } = useToast()
   const { completedExercises, completeExercise } = useStore()
 
@@ -41,14 +42,14 @@ export function ChapterExercises({ chapterId }: ChapterExercisesProps) {
           <CardTitle>Practice Exercises</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          {chapterData.contentSections.map(
+          {chapter?.contentSections?.map(
             (section) =>
               section.exercises &&
               section.exercises.length > 0 && (
                 <motion.div key={section.sectionId} variants={itemVariants} className="space-y-4">
                   <h3 className="text-lg font-semibold">{section.heading}</h3>
 
-                  {section.exercises.map((exercise) => (
+                  {section?.exercises?.map((exercise) => (
                     <ExerciseItem
                       key={exercise.exerciseId}
                       exercise={exercise}

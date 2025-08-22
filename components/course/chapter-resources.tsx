@@ -5,12 +5,13 @@ import { motion } from "framer-motion"
 import { chapterData } from "@/lib/course-data"
 import { ExternalLink } from "lucide-react"
 import { Button } from "../ui/button"
+import { LearningResourceType } from "@/types/chapters"
 
 interface ChapterResourcesProps {
-  chapterId: string
+  chapter: LearningResourceType[]
 }
 
-export function ChapterResources({ chapterId }: ChapterResourcesProps) {
+export function ChapterResources({ chapter }: ChapterResourcesProps) {
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -35,7 +36,7 @@ export function ChapterResources({ chapterId }: ChapterResourcesProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {chapterData.learningResources?.map((resource) => (
+            {chapter?.map((resource) => (
               <motion.div
                 key={resource.resourceId}
                 variants={itemVariants}

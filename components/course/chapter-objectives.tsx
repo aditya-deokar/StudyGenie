@@ -2,15 +2,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
-import { chapterData } from "@/lib/course-data"
+
 import { CheckCircle } from "lucide-react"
 import { useStore } from "@/lib/store"
+import { ContentType } from "@/types/chapters"
 
 interface ChapterObjectivesProps {
-  chapterId: string
+  chapter: ContentType
 }
 
-export function ChapterObjectives({ chapterId }: ChapterObjectivesProps) {
+export function ChapterObjectives({ chapter }: ChapterObjectivesProps) {
   const { completedObjectives, completeObjective } = useStore()
 
   // Animation variants
@@ -37,7 +38,7 @@ export function ChapterObjectives({ chapterId }: ChapterObjectivesProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {chapterData.learningObjectives?.map((objective, index) => (
+            {chapter?.learningObjectives?.map((objective, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}

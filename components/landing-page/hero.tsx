@@ -36,11 +36,11 @@ export default function Hero({ data }: HeroProps) {
     >
       {/* Floating papers background */}
       <div className="absolute inset-0 overflow-hidden">
-        <FloatingPaper count={20} />
+        <FloatingPaper count={8} />
       </div>
 
-      {/* Background elements */}
-      <motion.div className="absolute inset-0 z-0" style={{ y, opacity }}>
+       {/* Background elements */}
+       <motion.div className="absolute inset-0 z-0" style={{ y, opacity }}>
         <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-blob"></div>
         <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
@@ -116,12 +116,12 @@ export default function Hero({ data }: HeroProps) {
             initial={{ opacity: 0, scale: 0.8, x: 100 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.5, type: "spring", stiffness: 100 }}
-            className="lg:w-1/2 relative"
+            className="lg:w-1/2 w-full relative"
           >
             <div className="relative ">
-              <div className="absolute inset-0 bg-gradient-to-r from-brand-600 to-purple-600 rounded-2xl rotate-3 scale-105 opacity-10"></div>
+              {/* <div className="absolute inset-0 bg-gradient-to-r from-brand-600 to-purple-600 rounded-2xl rotate-3 scale-105 opacity-10"></div> */}
               
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-100 rounded-full opacity-80 blur-xl"></div>
+                {/* <div className="absolute -top-4 -left-4 w-24 h-24 bg-indigo-100 rounded-full opacity-80 blur-xl"></div> */}
                 <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-purple-100 rounded-full opacity-80 blur-xl"></div>
 
                 {/* 3D Illustration */}
@@ -131,7 +131,7 @@ export default function Hero({ data }: HeroProps) {
 
                 {/* for insights */}
                 <motion.div
-                  className="absolute -bottom-6 -right-6 bg-white rounded-xl p-3 shadow-lg border border-slate-100 "
+                  className="absolute lg:-bottom-6 lg:-right-6 right-1 -bottom-28 glass rounded-xl p-3 shadow-lg border border-slate-100 "
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
@@ -167,7 +167,7 @@ export default function Hero({ data }: HeroProps) {
 
                 {/* for course */}
                 <motion.div
-                  className="absolute -bottom-32 -left-32  rounded-xl p-3 shadow-lg border glass "
+                  className="absolute lg:-bottom-32 -bottom-48 lg:-left-32 -left-1 rounded-xl p-3 shadow-lg border glass "
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
@@ -194,7 +194,7 @@ export default function Hero({ data }: HeroProps) {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-slate-900">Create Courses</p>
+                      <p className="text-sm  font-medium text-slate-900">Create Courses</p>
                       <p className="text-xs text-slate-500">with Most latest Content</p>
                     </div>
                   </div>

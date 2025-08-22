@@ -52,9 +52,9 @@ export default function CreativeSteps() {
   return (
     <section ref={ref} className="py-20 relative overflow-hidden bg-white">
       {/* Background decorations */}
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-slate-50 to-transparent"></div>
+      {/* <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-slate-50 to-transparent"></div>
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-50 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-50 rounded-full blur-3xl opacity-50"></div>
+      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-50 rounded-full blur-3xl opacity-50"></div> */}
 
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -104,7 +104,7 @@ export default function CreativeSteps() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold mb-4"
+            className="text-3xl text-slate-600 md:text-4xl font-bold mb-4"
           >
             Three Simple Steps to Success
           </motion.h2>
@@ -198,7 +198,7 @@ export default function CreativeSteps() {
           </div>
 
           {/* Steps content */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-[60vh]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:h-[60vh]">
             {steps.map((step, index) => {
               const Icon = step.icon
 

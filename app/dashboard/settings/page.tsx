@@ -17,6 +17,8 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
+import OnboardingForm from "@/app/onboarding/_components/OnboardingForm"
+import { industries } from "@/data/OnboardingForm"
 
 export default function SettingsPage() {
   const { data, ui, toggleDarkMode, updateUserPreferences } = useDashboardStore()
@@ -200,6 +202,12 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </motion.div>
+
+
+         
+
+        
+
         </motion.div>
       </TabsContent>
 

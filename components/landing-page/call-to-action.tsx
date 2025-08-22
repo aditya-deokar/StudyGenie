@@ -107,7 +107,7 @@ export default function CallToAction({ data }: CallToActionProps) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href={data.ctaButtonLink}>
+            <Link href={'/dashboard'}>
               <Button
                 size="lg"
                 className="bg-white hover:bg-slate-100 text-indigo-600 px-8 py-6 text-lg rounded-xl shadow-lg shadow-indigo-700/30 hover:shadow-indigo-700/50 transition-all duration-300"

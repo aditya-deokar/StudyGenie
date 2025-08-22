@@ -68,34 +68,7 @@ export function RoboAnimation() {
             }}
           />
 
-          {/* Additional orbiting elements */}
-          <motion.div
-            className="absolute w-3 h-3 bg-pink-400 rounded-full opacity-70"
-            animate={{
-              x: [10, -15, 10, 25, 10],
-              y: [15, 25, -15, -5, 15],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-              delay: 0.5,
-            }}
-          />
-
-          <motion.div
-            className="absolute w-5 h-5 bg-blue-400 rounded-full opacity-70"
-            animate={{
-              x: [-15, 5, 25, 5, -15],
-              y: [5, 25, 5, -15, 5],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-              delay: 1.5,
-            }}
-          />
+          
         </div>
       </motion.div>
     </div>

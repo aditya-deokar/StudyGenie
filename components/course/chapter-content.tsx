@@ -7,13 +7,16 @@ import { Check, CheckCircle } from "lucide-react"
 import { motion } from "framer-motion"
 import { useToast } from "../ui/use-toast"
 import { useStore } from "@/lib/store"
-import { chapterData } from "@/lib/course-data"
+import { ContentType } from "@/types/chapters"
+
 
 interface ChapterContentProps {
-  chapterId: string
+  chapter: ContentType
 }
 
-export function ChapterContent({ chapterId }: ChapterContentProps) {
+export function ChapterContent({ chapter }: ChapterContentProps) {
+
+  // console.log(chapter);
   const { toast } = useToast()
   const { markSectionAsRead, readSections } = useStore()
 
@@ -37,12 +40,12 @@ export function ChapterContent({ chapterId }: ChapterContentProps) {
     <motion.div initial="hidden" animate="visible" variants={containerVariants}>
       <Card>
         <CardHeader>
-          <CardTitle>{chapterData.title}</CardTitle>
+          <CardTitle>{chapter.title}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-8">
-          <p className="text-muted-foreground">{chapterData.description}</p>
+          <p className="text-muted-foreground">{chapter.description}</p>
 
-          {chapterData.contentSections.map((section, index) => (
+          {chapter?.contentSections?.map((section, index) => (
             <motion.div key={section.sectionId} variants={itemVariants} className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold" id={section.sectionId}>
@@ -61,16 +64,19 @@ export function ChapterContent({ chapterId }: ChapterContentProps) {
                 />
               </div>
 
-              {section.content.map((paragraph, pIndex) => (
+              {section?.content?.map((paragraph, pIndex) => (
+                <>
                 <p key={pIndex} className="text-sm">
-                  {paragraph.textContent}
+                  {paragraph?.textContent}
                 </p>
+
+                </>
               ))}
 
               {section.examples && section.examples.length > 0 && (
                 <div className="space-y-2">
                   <h4 className="text-sm font-medium">Examples</h4>
-                  {section.examples.map((example, eIndex) => (
+                  {section?.examples?.map((example, eIndex) => (
                     <motion.div
                       key={eIndex}
                       className="rounded-md bg-muted p-4"
@@ -86,7 +92,7 @@ export function ChapterContent({ chapterId }: ChapterContentProps) {
                 </div>
               )}
 
-              {index < chapterData.contentSections.length - 1 && <Separator />}
+              {index < chapter.contentSections.length - 1 && <Separator />}
             </motion.div>
           ))}
         </CardContent>

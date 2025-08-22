@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { usePathname } from 'next/navigation'
+import Image from "next/image"
 
 
 
@@ -67,7 +68,7 @@ export function Sidebar({ className }: SidebarProps) {
             exit={{ opacity: 0 }}
             className="flex items-center gap-2 font-semibold text-lg"
           >
-            <GraduationCap className="h-6 w-6 text-primary" />
+            <Image src={'/logo.svg'} alt="logo" width="25" height="25"/>
             <span>NeoPrep</span>
           </motion.div>
         )}
