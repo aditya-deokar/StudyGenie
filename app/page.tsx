@@ -1,22 +1,39 @@
-import { Layout } from "lucide-react";
-import Link from "next/link";
+import Benefits from "@/components/landing-page/benefits";
+import CallToAction from "@/components/landing-page/call-to-action";
+import CreativeSteps from "@/components/landing-page/creative-steps";
+import FAQ from "@/components/landing-page/faq";
+import Hero from "@/components/landing-page/hero";
+import IndustryShowcase from "@/components/landing-page/industry-showcase";
+import Navbar from "@/components/landing-page/navbar";
+import { SparklesCore } from "@/components/landing-page/sparkles";
+import { neoPrepLandingData } from "@/lib/landing-page-data";
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <Link
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="/dashboard"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Layout className="w-4 h-4" />
-            Go to dashboard
-          </Link>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 overflow-hidden">
+      {/* Ambient background with moving particles */}
+      <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
+        <SparklesCore
+          id="tsparticlesfullpage"
+          background="transparent"
+          minSize={0.4}
+          maxSize={1.0}
+          particleDensity={40}
+          className="w-full h-full"
+          particleColor="#6366f1"
+        />
+      </div>
+
+      <div className="relative z-10">
+        <Navbar />
+        <Hero data={neoPrepLandingData.hero} />
+        <CreativeSteps />
+        <Benefits/>
+        <IndustryShowcase data={neoPrepLandingData.industryShowcase} />
+        <FAQ data={neoPrepLandingData.faq} />
+        <CallToAction data={neoPrepLandingData.callToAction} />
+      </div>
+    </main>
   );
 }
