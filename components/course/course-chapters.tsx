@@ -7,11 +7,12 @@ import { Chapter } from "@/types/courseOutput"
 
 
 interface CourseChaptersProps {
+  courseId?:string,
   chapters?:Chapter[]
   className?: string
 }
 
-export function CourseChapters({chapters, className }: CourseChaptersProps) {
+export function CourseChapters({courseId, chapters, className }: CourseChaptersProps) {
   
 
   return (
@@ -44,8 +45,8 @@ export function CourseChapters({chapters, className }: CourseChaptersProps) {
                 </div>
               </div>
               <Button asChild size="sm" className="mt-2 sm:mt-0">
-                <Link href={`/chapters/${index +1}`} className="flex items-center gap-1">
-                  <Play className="h-3.5 w-3.5" />
+                <Link href={`/course/dashboard/${courseId}/chapters/${index +1}`} className="flex items-center gap-1">
+                  <Play className="h-3.5 w-3.5" />start
                   {/* {chapter.progress > 0 && chapter.progress < 100 ? "Continue" : chapter.completed ? "Review" : "Start"} */}
                 </Link>
               </Button>

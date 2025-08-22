@@ -49,11 +49,11 @@ const page = () => {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <CourseOverview courseData={course} className="col-span-full" />
-                <CourseProgress className="md:col-span-2 lg:col-span-2" />
-                <Achievements className="md:col-span-2 lg:col-span-1" />
+                {/* <CourseProgress className="md:col-span-2 lg:col-span-2" />
+                <Achievements className="md:col-span-2 lg:col-span-1" /> */}
          </div>
-              <CourseChapters chapters={course?.courseOutput?.chapters} className="mt-6" />
-              <RecentActivity className="mt-6" />
+              <CourseChapters courseId={params.courseId} chapters={course?.courseOutput?.chapters} className="mt-6" />
+              {/* <RecentActivity className="mt-6" /> */}
     </div>
   )
 }

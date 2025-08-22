@@ -32,7 +32,7 @@ export default function Hero({ data }: HeroProps) {
   return (
     <section
       ref={ref}
-      className="relative h-screen overflow-hidden py-20 md:py-28 bg-gradient-to-br from-indigo-50 via-white to-purple-50"
+      className="relative min-h-screen  py-20 md:py-28 bg-gradient-to-br from-indigo-50 via-white to-purple-50"
     >
       {/* Floating papers background */}
       <div className="absolute inset-0 overflow-hidden">

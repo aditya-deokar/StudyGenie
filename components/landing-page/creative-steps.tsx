@@ -212,7 +212,7 @@ export default function CreativeSteps() {
                   className={`relative ${activeStep === step.id ? "z-10" : "z-0"}`}
                 >
                   <Card
-                    className={`h-full overflow-hidden transition-all duration-500  ${
+                    className={`h-full overflow-hidden transition-all duration-500 bg-gradient-to-br from-indigo-50 via-white to-purple-50  ${
                       activeStep === step.id
                         ? "border-2 shadow-lg scale-105 border-indigo-200"
                         : "border border-slate-200 opacity-70 scale-95"

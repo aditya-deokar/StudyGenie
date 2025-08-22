@@ -66,15 +66,15 @@ const CreateCoursePage = () => {
           {StepperOptions.map((item, index) => (
             <div key={index} className="flex items-center">
               <div className="flex flex-col items-center w-[50px] md:w-[100px]">
-                <div className={`p-3 bg-gray-100 rounded-full ${activeIndex >= index ? 'bg-gray-300' : ''}`}>
+                <div className={`p-3 bg-primary rounded-full ${activeIndex >= index ? 'bg-secondary' : ''}`}>
                   {item.icon}
                 </div>
                 <h2 className="hidden md:block text-sm font-medium">{item.name}</h2>
               </div>
               {index !== StepperOptions.length - 1 && (
                 <div
-                  className={`h-1 w-[50px] md:w-[100px] lg:w-[170px] rounded-full bg-gray-200 ${
-                    activeIndex - 1 >= index ? 'bg-gray-300' : ''
+                  className={`h-1 w-[50px] md:w-[100px] lg:w-[170px] rounded-full bg-primary ${
+                    activeIndex - 1 >= index ? 'bg-secondary' : ''
                   }`}
                 ></div>
               )}

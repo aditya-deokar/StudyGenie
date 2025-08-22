@@ -202,6 +202,7 @@ body {
 .theme-blue-scaled {
   --primary: var(--color-blue-600);
   --primary-foreground: var(--color-blue-50);
+  /* --card: var(--color-blue-50); */
 
   @variant dark {
     --primary: var(--color-blue-500);

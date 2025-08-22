@@ -16,7 +16,7 @@ import {
   SidebarGroupContent,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { BarChartIcon, BookOpenIcon, BriefcaseIcon, GraduationCapIcon, HomeIcon, TrendingUpIcon } from "lucide-react"
+import { BarChartIcon, BookOpenIcon, BriefcaseIcon, GraduationCapIcon, HomeIcon, LayoutDashboard, TrendingUpIcon } from "lucide-react"
 import OverviewSection from "./industry-sections/overview-section"
 import SalarySection from "./industry-sections/salary-section"
 import SkillsSection from "./industry-sections/skills-section"
@@ -25,12 +25,15 @@ import TrendsSection from "./industry-sections/trends-section"
 import { Separator } from "./ui/separator"
 import { ThemeSelector } from "./theme-selector"
 import { ModeToggle } from "./ui/mode-toggle"
+import Link from "next/link"
 
 type DashboardProps = {
   data: IndustryData
 }
 
 export default function Dashboard({ data }: DashboardProps) {
+
+  // console.log("data1"+ data)
   const [activeSection, setActiveSection] = useState<string>("overview")
 
   const renderSection = () => {
@@ -55,6 +58,16 @@ export default function Dashboard({ data }: DashboardProps) {
       <div className="flex h-screen w-full overflow-hidden bg-muted/40">
         <Sidebar>
           <SidebarHeader className="border-b">
+            <Link href={"/dashboard"}>
+              <div className="flex items-center gap-2 px-2 py-4">
+                <LayoutDashboard className="h-6 w-6" />
+                <span className="font-semibold">Back to Dashboard</span>
+              </div>
+            </Link>
+            <Separator
+                orientation="horizontal"
+                className="data-[orientation=horizontal]:h-1"
+              />
             <div className="flex items-center gap-2 px-2 py-4">
               <BarChartIcon className="h-6 w-6" />
               <span className="font-semibold">Industry Insights</span>
@@ -106,19 +119,10 @@ export default function Dashboard({ data }: DashboardProps) {
             </SidebarGroup>
           </SidebarContent>
           <SidebarFooter className="border-t p-4">
-            <div className="text-xs text-muted-foreground">Data updated: April 2025</div>
+            <div className="text-xs text-muted-foreground"></div>
           </SidebarFooter>
         </Sidebar>
         <div className="flex-1 overflow-auto">
-
-
-
-          {/* <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
-            <SidebarTrigger/>
-            <h1 className="text-xl font-semibold">{data.industryName}</h1>
-           
-          </header> */}
-
 
 
           <header className="flex my-2 h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">

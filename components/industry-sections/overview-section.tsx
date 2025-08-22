@@ -11,8 +11,10 @@ type OverviewSectionProps = {
 }
 
 export default function OverviewSection({ data }: OverviewSectionProps) {
+
+  // console.log(  "data- "+ data);
   // Calculate average median salary
-  const avgMedianSalary = data.salaryRange.reduce((sum, item) => sum + item.median, 0) / data.salaryRange.length
+  const avgMedianSalary = data?.salaryRange?.reduce((sum, item) => sum + item.median, 0) / data?.salaryRange?.length
 
   return (
     <div className="space-y-6">
@@ -23,7 +25,7 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
             <TrendingUpIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.growthRate}%</div>
+            <div className="text-2xl font-bold">{data?.growthRate}%</div>
             <p className="text-xs text-muted-foreground">Annual industry growth</p>
           </CardContent>
         </Card>
@@ -33,7 +35,7 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
             <BriefcaseIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.demandLevel}</div>
+            <div className="text-2xl font-bold">{data?.demandLevel}</div>
             <p className="text-xs text-muted-foreground">Current market demand</p>
           </CardContent>
         </Card>
@@ -53,7 +55,7 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
             <BuildingIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.marketOutlook}</div>
+            <div className="text-2xl font-bold">{data?.marketOutlook}</div>
             <p className="text-xs text-muted-foreground">Future industry outlook</p>
           </CardContent>
         </Card>
@@ -65,7 +67,7 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
           <CardDescription>Cloud Computing in India</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">{data.overview}</p>
+          <p className="text-muted-foreground">{data?.overview}</p>
         </CardContent>
       </Card>
 
@@ -77,7 +79,7 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {data.topSkills.map((skill, index) => (
+              {data?.topSkills?.map((skill, index) => (
                 <Badge key={index} variant="secondary">
                   {skill}
                 </Badge>
@@ -92,13 +94,13 @@ export default function OverviewSection({ data }: OverviewSectionProps) {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {data.keyCompaniesHiring.slice(0, 12).map((company, index) => (
+              {data?.keyCompaniesHiring?.slice(0, 12).map((company, index) => (
                 <Badge key={index} variant="outline">
                   {company}
                 </Badge>
               ))}
-              {data.keyCompaniesHiring.length > 12 && (
-                <Badge variant="outline">+{data.keyCompaniesHiring.length - 12} more</Badge>
+              {data?.keyCompaniesHiring?.length > 12 && (
+                <Badge variant="outline">+{data?.keyCompaniesHiring?.length - 12} more</Badge>
               )}
             </div>
           </CardContent>

@@ -52,9 +52,9 @@ const SelectOptions = () => {
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="2 Hours">2 Hours</SelectItem>
-              <SelectItem value="3 Hours">3 Hours</SelectItem>
-              <SelectItem value="more than 3 Hours">more than 3 Hours</SelectItem>
+              <SelectItem value="2 Hours">Short</SelectItem>
+              <SelectItem value="3 Hours">Medium</SelectItem>
+              <SelectItem value="more than 3 Hours">Large</SelectItem>
             </SelectContent>
           </Select>
         </div>

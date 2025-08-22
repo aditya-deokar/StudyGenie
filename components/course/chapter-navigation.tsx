@@ -6,8 +6,13 @@ import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { useStore } from "@/lib/store"
+import { ContentType } from "@/types/chapters"
 
-export function ChapterNavigation() {
+interface ChapterContentProps {
+  chapter: ContentType
+}
+
+export function ChapterNavigation({ chapter }: ChapterContentProps)  {
   const { readSections } = useStore()
 
   // In a real app, we would fetch the chapter navigation based on the current chapter
@@ -36,6 +41,7 @@ export function ChapterNavigation() {
     ],
   }
 
+  console.log(chapter?.contentSections)
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
       <Card>
@@ -46,18 +52,18 @@ export function ChapterNavigation() {
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Sections</h3>
             <nav className="space-y-1">
-              {navigation.sections.map((section) => {
-                const isRead = readSections.includes(section.id)
+              {chapter?.contentSections.map((section) => {
+                const isRead = readSections.includes(section.sectionId)
 
                 return (
                   <Button
-                    key={section.id}
+                    key={section.sectionId}
                     variant={isRead ? "secondary" : "ghost"}
                     className="w-full justify-start text-sm"
                     asChild
                   >
-                    <a href={`#${section.id}`} className="flex items-center justify-between">
-                      <span>{section.title}</span>
+                    <a href={`#${section.sectionId}`} className="flex items-center justify-between">
+                      <span>{section.heading}</span>
                       {isRead && <CheckCircle className="h-3 w-3 text-green-500" />}
                     </a>
                   </Button>

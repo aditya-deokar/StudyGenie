@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../app/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -54,32 +54,12 @@ model IndustryInsights {
   id       String  @id @default(cuid())
   industry String @unique
   user User[]
-  salaryRange Json  
-  // Array of { role:string , min:float, max:float , median:float, location:string}
-  growthRate Float
-  demandLevel DemandLevel
-  topSkills String[]
-
-  marketOutlook MarketOutlook
-  keyTrends String[]
-  recommendedSkills String[]
-
+  industryData Json
   lastUpdated DateTime @default(now())
   nextUpdate DateTime
 
   @@index([industry])
 
-}
-
-enum DemandLevel{
-  HIGH
-  MEDIUM
-  NEGATIVE
-}
-enum MarketOutlook{
-  POSITIVE
-  NEUTRAL
-  NEGATIVE
 }
 
 

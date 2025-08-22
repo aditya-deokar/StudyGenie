@@ -107,7 +107,7 @@ export default function IndustryShowcase({ data }: IndustryShowcaseProps) {
                 boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
               }}
             >
-              <Card className="border-slate-200 h-full hover:border-indigo-200 transition-all duration-300">
+              <Card className="border-slate-200 h-full hover:border-indigo-200 transition-all duration-300 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg text-slate-600">{highlight.label}</CardTitle>
                 </CardHeader>

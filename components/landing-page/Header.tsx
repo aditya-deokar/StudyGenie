@@ -26,14 +26,13 @@ const Header = async () => {
             width={30}
             height={30}
             alt='NeoPrep.ai'
-            // className='h-12 py-1 w-auto object-contain'
           />
-          <h1 className='font-bold'>NeoPrep</h1>
+          <h1 className='font-bold text-black'>NeoPrep</h1>
         </Link>
 
         <div className="flex items-center space-x-2 md:space-x-4">
           <SignedIn>
-            <Link href="/dashboard">
+            <Link href="/dashboard/onboarding">
               <Button variant="link">
                 <LayoutDashboard className="h-4 w-4 mr-2" />
                 <span className="hidden md:block">Industry Insights</span>
@@ -52,14 +51,14 @@ const Header = async () => {
 
               <DropdownMenuContent>
                 <DropdownMenuItem asChild>
-                  <Link href="/dashboard" className="flex items-center gap-2">
+                  <Link href="/dashboard/courses" className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
                     <span>Generate AI courses</span>
                   </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem asChild>
-                  <Link href="/interview" className="flex items-center gap-2">
+                  <Link href="/dashboard/interviews" className="flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" />
                     <span>Interview Prep</span>
                   </Link>
@@ -69,7 +68,7 @@ const Header = async () => {
           </SignedIn>
 
           <SignedOut>
-            <SignInButton mode="modal">
+            <SignInButton>
               <Button variant="outline">Sign in</Button>
             </SignInButton>
           </SignedOut>

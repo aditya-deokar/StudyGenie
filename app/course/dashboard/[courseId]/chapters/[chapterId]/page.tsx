@@ -66,7 +66,7 @@ export default function ChapterPage() {
 
       <div className="flex items-center justify-between">
         <Button variant="ghost" size="sm" asChild>
-          <Link href="/" className="flex items-center gap-1">
+          <Link href={`/course/dashboard/${courseId}`} className="flex items-center gap-1">
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
           </Link>
@@ -113,7 +113,7 @@ export default function ChapterPage() {
           </div>
 
           <div>
-            <ChapterNavigation />
+            <ChapterNavigation chapter={chapter.content} />
           </div>
         </div>
       </Tabs>

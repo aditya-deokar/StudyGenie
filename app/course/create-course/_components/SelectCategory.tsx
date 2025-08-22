@@ -30,8 +30,8 @@ const SelectCategory = () => {
             <div
               key={index}
               onClick={() => handleCategoryChange(item.name)}
-              className={`flex flex-col p-5 border items-center rounded-xl hover:border-black hover:bg-blue-100 cursor-pointer
-                    ${userCourseInput?.category == item.name && "border-black bg-blue-100"}`}>
+              className={`flex flex-col p-5 border items-center rounded-xl hover:border-black hover:bg-secondary cursor-pointer
+                    ${userCourseInput?.category == item.name && "border-black bg-secondary"}`}>
               <Image src={item.icon} width={50} height={50} alt={item.name} />
               <h2 className='font-medium'>{item.name}</h2>
             </div>

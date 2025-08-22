@@ -3,20 +3,18 @@ import Image from "next/image";
 
 import Link from "next/link";
 
-import { CourseList } from "@prisma/client";
-import { CourseOutput } from "@/types/courseOutput"; // Ensure this type matches your actual structure
+
 import DropDownOption from "./DropDownOption";
+import { CourseListType } from "@/types/courseList";
 
 interface CourseCardProps {
-  course: CourseList & {
-    courseOutput: CourseOutput[] | null; // now it's an array (based on your structure)
-  };
+  course: CourseListType | null; 
   refreshData: () => void;
   displayUser?: boolean;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUser = false }) => {
-  const layout = course.courseOutput?.[0]; // Access the first item in courseOutput
+  // console.log(course)
 
   const handleOnDelete = async () => {
     try {
@@ -29,11 +27,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
   };
 
   return (
-    <Link href={`/course/${course.courseId}`} className="">
+    
+    <Link href={`/course/dashboard/${course?.courseId}`} className="">
       <div className="shadow-md p-2 mt-4 rounded-lg hover:-translate-y-2 border hover:border-2 cursor-pointer transition-all duration-300">
-        {course.courseBanner && (
+        {course?.courseBanner && (
           <Image
-            src={course.courseBanner}
+            src={course?.courseBanner}
             width={300}
             height={200}
             alt="banner"
@@ -43,7 +42,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
 
         <div className="p-2">
           <h2 className="font-medium text-lg flex justify-between items-center">
-            {layout?.CourseName || "Untitled Course"}
+            {course?.courseOutput?.courseName || "Untitled Course"}
 
             {!displayUser && (
               <DropDownOption handleOnDelete={handleOnDelete}>
@@ -51,30 +50,30 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
               </DropDownOption>
             )}
           </h2>
-          <p className="text-primary/50 text-sm my-1">{course.category}</p>
+          <p className="text-primary/50 text-sm my-1">{course?.category}</p>
 
           <div className="flex items-center justify-between">
-            <h2 className="flex gap-2 items-center p-1 bg-purple-200 rounded text-primary text-sm">
+            <h2 className="flex gap-2 items-center p-1 bg-secondary rounded text-primary text-sm">
               <BookOpen />
-              {layout?.Chapters?.length || 0} Chapters
+              {course?.courseOutput?.noOfChapters || 0} Chapters
             </h2>
-            <h2 className="p-1 bg-purple-200 rounded text-primary text-sm">
-              {layout?.level || course.level || "N/A"}
+            <h2 className="p-1 bg-secondary rounded text-primary text-sm">
+              { course?.level || "N/A"}
             </h2>
           </div>
 
           {displayUser && (
             <div className="flex gap-2 items-center mt-2">
-              {course.userProfileImage && (
+              {course?.userProfileImage && (
                 <Image
-                  src={course.userProfileImage}
+                  src={course?.userProfileImage}
                   width={33}
                   height={33}
                   alt="user image"
                   className="rounded-full"
                 />
               )}
-              <h2 className="text-sm font-medium">{course.userName}</h2>
+              <h2 className="text-sm font-medium">{course?.userName}</h2>
             </div>
           )}
         </div>

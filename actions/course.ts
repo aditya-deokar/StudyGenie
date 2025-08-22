@@ -8,7 +8,7 @@ export const getUserCourses = async () => {
   
     const courses = await prisma.courseList.findMany({
       where: {
-        createdBy: user.primaryEmailAddress.emailAddress,
+        createdBy: user.id,
       },
     });
   

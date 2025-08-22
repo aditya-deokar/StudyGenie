@@ -1,42 +1,29 @@
 'use client';
 
-import React, { useContext, useEffect } from 'react';
-import { UserCourseListContext } from '@/app/course/_context/UserCourseListContext';
+import React from 'react';
 import CourseCard from './CourseCard';
+import { CourseListType } from '@/types/courseList';
 
-interface Course {
-  courseId: string;
-  name: string;
-  level: string;
-  category: string;
-  courseOutput: any;
-  createdBy: string;
-  userName: string;
-  userProfileImage: string;
-  publish: boolean;
-}
 
-const UserCourseList: React.FC<{ initialCourses: Course[] }> = ({ initialCourses }) => {
-  const { setUserCourseList } = useContext(UserCourseListContext);
+const UserCourseList: React.FC<{ initialCourses: CourseListType[] }> = ({ initialCourses }) => {
+  
 
-  useEffect(() => {
-    setUserCourseList(initialCourses);
-  }, [initialCourses, setUserCourseList]);
+  // console.log(initialCourses);
 
   return (
     <div className='mt-10'>
       <h2 className='font-medium text-xl'>My AI Courses</h2>
 
+    <div>
+    {initialCourses.length == 0 &&  <div className='opacity-50'>No Courses Available! ,Please Generate Your First Course</div>
+    }
+    </div>
       <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>
-        {initialCourses.length > 0 ? (
+        {initialCourses.length > 0 && (
           initialCourses.map((course, index) => (
             <CourseCard key={index} course={course} refreshData={() => {}} />
           ))
-        ) : (
-          [1, 2, 3, 4, 5].map((_, i) => (
-            <div key={i} className='w-full bg-slate-300 animate-pulse rounded-lg h-[270px] mt-5'></div>
-          ))
-        )}
+        ) }
       </div>
     </div>
   );

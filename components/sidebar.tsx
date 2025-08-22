@@ -37,9 +37,9 @@ export function Sidebar({ className }: SidebarProps) {
 
   const navItems = [
     { icon: Home, label: "Dashboard", href: "/dashboard" },
+    { icon: Compass, label: "Industry Insights",  href: "/dashboard/onboarding" },
     { icon: BookOpen, label: "Courses" ,href: "/dashboard/courses" },
     { icon: Video, label: "Interviews", href: "/dashboard/interviews" },
-    { icon: Compass, label: "Insights",  href: "/industry" },
     { icon: BarChart3, label: "Skills", href: "/dashboard/skills" },
     { icon: Calendar, label: "Activity", href: "/dashboard/calendar" },
   ]
@@ -145,7 +145,7 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
       </div>
 
-      <div className="mt-auto p-2 border-t">
+      {/* <div className="mt-auto p-2 border-t">
         <div className={cn("flex items-center gap-2 p-2", sidebarCollapsed ? "justify-center" : "px-2")}>
           <Avatar className="h-8 w-8">
             <AvatarImage src="/images/avatars/alex.png" alt="Alex Johnson" />
@@ -158,7 +158,7 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
     </motion.div>
   )
 }

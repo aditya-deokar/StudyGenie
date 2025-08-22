@@ -76,29 +76,29 @@ export function DashboardSidebar() {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             <SidebarMenuItem>
-                                <SidebarMenuButton asChild isActive={pathname === "/course/dashboard"}>
-                                    <Link href="/course">
+                                <SidebarMenuButton asChild isActive={pathname === `/course/dashboard/${course?.courseId}`}>
+                                    <Link href={`/course/dashboard/${course?.courseId}`}>
                                         <Home className="h-4 w-4" />
                                         <span>Dashboard</span>
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
-                                <SidebarMenuButton asChild isActive={pathname === "/course/achievements"}>
-                                    <Link href="/course/achievements">
+                                <SidebarMenuButton asChild isActive={pathname === `/course/dashboard/${course?.courseId}/achievements`}>
+                                    <Link href={`/course/dashboard/${course?.courseId}/achievements`}>
                                         <Trophy className="h-4 w-4" />
                                         <span>Achievements</span>
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
-                            <SidebarMenuItem>
+                            {/* <SidebarMenuItem>
                                 <SidebarMenuButton asChild isActive={pathname === "/course/settings"}>
                                     <Link href="/course/settings">
                                         <Settings className="h-4 w-4" />
                                         <span>Settings</span>
                                     </Link>
                                 </SidebarMenuButton>
-                            </SidebarMenuItem>
+                            </SidebarMenuItem> */}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>

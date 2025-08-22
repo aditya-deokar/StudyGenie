@@ -66,7 +66,7 @@ export default function FAQ({ data }: FAQProps) {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="single" collapsible className="w-full bg-gradient-to-br from-indigo-50 via-white to-purple-50">
             {data.questions.map((faq, index) => (
               <motion.div
                 key={faq.id}
