@@ -42,7 +42,7 @@ export function Header() {
               {unreadCount > 0 && (
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -right-1 -top-1">
                   <Badge
-                    variant="destructive"
+                    variant="default"
                     className="h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]"
                   >
                     {unreadCount}

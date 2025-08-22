@@ -1,4 +1,4 @@
-import { BookOpen, EllipsisVertical } from "lucide-react";
+import { BookOpen, BookOpenText, EllipsisVertical } from "lucide-react";
 import Image from "next/image";
 
 import Link from "next/link";
@@ -6,6 +6,9 @@ import Link from "next/link";
 
 import DropDownOption from "./DropDownOption";
 import { CourseListType } from "@/types/courseList";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface CourseCardProps {
   course: CourseListType | null; 
@@ -28,9 +31,11 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
 
   return (
     
-    <Link href={`/course/dashboard/${course?.courseId}`} className="">
-      <div className="shadow-md p-2 mt-4 rounded-lg hover:-translate-y-2 border hover:border-2 cursor-pointer transition-all duration-300">
-        {course?.courseBanner && (
+  
+      <Card className="relative">
+      <CardContent>
+      <Badge variant={"default"} className='absolute top-3 right-2 opacity-60'>{course?.category}</Badge>
+      {course?.courseBanner && (
           <Image
             src={course?.courseBanner}
             width={300}
@@ -41,6 +46,18 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
         )}
 
         <div className="p-2">
+
+        <div className="flex items-center justify-between pb-1">
+            
+            <Badge variant="secondary">
+            <BookOpen />
+              {course?.courseOutput?.noOfChapters || 0} Chapters
+            </Badge>
+            <Badge variant="outline">
+            { course?.level || "N/A"}
+            </Badge>
+          </div>
+
           <h2 className="font-medium text-lg flex justify-between items-center">
             {course?.courseOutput?.courseName || "Untitled Course"}
 
@@ -50,20 +67,11 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
               </DropDownOption>
             )}
           </h2>
-          <p className="text-primary/50 text-sm my-1">{course?.category}</p>
 
-          <div className="flex items-center justify-between">
-            <h2 className="flex gap-2 items-center p-1 bg-secondary rounded text-primary text-sm">
-              <BookOpen />
-              {course?.courseOutput?.noOfChapters || 0} Chapters
-            </h2>
-            <h2 className="p-1 bg-secondary rounded text-primary text-sm">
-              { course?.level || "N/A"}
-            </h2>
-          </div>
+          
 
           {displayUser && (
-            <div className="flex gap-2 items-center mt-2">
+            <div className="flex gap-2 items-center">
               {course?.userProfileImage && (
                 <Image
                   src={course?.userProfileImage}
@@ -77,8 +85,21 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, refreshData, displayUse
             </div>
           )}
         </div>
-      </div>
-    </Link>
+
+
+      </CardContent>
+
+      <CardFooter className="">
+        <Link href={`/course/dashboard/${course?.courseId}`} className="w-full">
+          <Button variant="default" className="w-full">
+            <BookOpenText className="mr-2 h-4 w-4" />
+            View Course
+          </Button>
+        </Link>
+      </CardFooter>
+
+      </Card>
+    
   );
 };
 
