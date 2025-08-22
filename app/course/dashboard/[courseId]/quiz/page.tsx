@@ -82,7 +82,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between text-sm">
                 <span>Difficulty: Mixed</span>
-                <span>Last Updated: April 10, 2025</span>
+                <span>Last Updated: -</span>
               </div>
             </div>
           </CardContent>

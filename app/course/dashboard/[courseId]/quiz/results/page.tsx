@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -12,11 +12,16 @@ import { CheckCircle2, XCircle, AlertCircle } from "lucide-react"
 import { useQuizStore } from "@/lib/store"
 import { CodeBlock } from "../_component/code-block"
 import { CertificateSection } from "../_component/certificate-section"
+import { useUser } from "@clerk/nextjs"
+import { toast } from "sonner"
+import { getCourseById2 } from "@/actions/createCourse"
+import { CourseListType } from "@/types/courseList"
 
 
 export default function QuizResults() {
   const router = useRouter()
   const params = useParams();
+  const { user } = useUser();
   const courseId = params?.courseId as string;
   const { questions, answers, quizCompleted, getScore, resetQuiz } = useQuizStore()
 
@@ -52,6 +57,32 @@ export default function QuizResults() {
     resetQuiz()
     router.push(`/course/dashboard/${courseId}/quiz/instructions`)
   }
+
+  const [course, setCourse] = useState<CourseListType | null>(null)
+  const [loading, setLoading] = useState(false)
+
+
+  const fetchCourse = async () => {
+    if (params?.courseId) {  
+      setLoading(true);
+      try {
+        const result = await getCourseById2(params.courseId as string);
+        // console.log(result);
+        setCourse(result);
+      } catch (error) {
+        console.error("Error fetching course:", error);
+        toast.error("Failed to load course.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log(params.courseId);
+    fetchCourse()
+    console.log(course?.courseOutput?.chapters)
+  }, [params, user])
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -104,8 +135,8 @@ export default function QuizResults() {
           {isPassing && (
             <div className="mb-8">
               <CertificateSection
-                userName="John Doe"
-                quizTitle="Python Fundamentals Assessment"
+                userName={user?.fullName!}
+                quizTitle={course?.courseOutput.courseName}
                 score={score}
                 completionDate={new Date()}
               />
