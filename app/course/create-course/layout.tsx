@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, Suspense } from 'react';
 import { UserInputProvider } from '../_context/userInputContext';
 import { CourseInput } from '@/types/types';
- // Import the CourseInput type
+import { BarLoader } from 'react-spinners';
+// Import the CourseInput type
 
 
 interface CreateCourseLayoutProps {
@@ -14,11 +15,13 @@ const CreateCourseLayout: React.FC<CreateCourseLayoutProps> = ({ children }) => 
   const [userCourseInput, setUserCourseInput] = useState<CourseInput>({});
 
   return (
-    <div>
-      <UserInputProvider value={{ userCourseInput, setUserCourseInput }}>
-        {children}
-      </UserInputProvider>
-    </div>
+    <Suspense fallback={<BarLoader className="mt-4" width={"100%"} color="gray" />}>
+      <div>
+        <UserInputProvider value={{ userCourseInput, setUserCourseInput }}>
+          {children}
+        </UserInputProvider>
+      </div>
+    </Suspense>
   );
 };
 

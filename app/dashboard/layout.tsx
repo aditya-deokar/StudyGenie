@@ -1,6 +1,8 @@
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { BarLoader } from "react-spinners";
 
 export const metadata: Metadata = {
   title: "NeoPrep",
@@ -13,6 +15,8 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
+
+    <Suspense fallback={<BarLoader className="mt-4" width={"100%"} color="gray" />}>
       <div className="flex h-screen bg-background">
             <Sidebar />
             <div className="flex flex-col flex-1 overflow-hidden">
@@ -21,6 +25,7 @@ export default async function DashboardLayout({
                 {children}
               </main>
             </div>
-          </div>
+          </div>                 
+    </Suspense>
   );
 }
