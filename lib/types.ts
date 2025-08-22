@@ -120,3 +120,15 @@ export type InternshipOpportunities = z.infer<
 
 
 export type IndustryData = z.infer<typeof IndustryDataSchema>; // This type now includes all nested types
+
+
+
+
+
+export interface ActivityDay {
+  date: string
+  activityLevel: 0 | 1 | 2 | 3 | 4
+}
+
+
+export type ActivityHeatmapData = ActivityDay[]

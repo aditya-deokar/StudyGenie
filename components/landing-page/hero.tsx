@@ -100,7 +100,7 @@ export default function Hero({ data }: HeroProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href={data.ctaButtonLink}>
+              <Link href={'/dashboard'}>
                 <Button
                   size="lg"
                   className=" bg-primary text-primary-foreground px-8 py-6 text-lg rounded-xl shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all duration-200 mb-5"
