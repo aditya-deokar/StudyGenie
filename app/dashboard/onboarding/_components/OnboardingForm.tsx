@@ -85,7 +85,7 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({ industries }) => {
     useEffect(() => {
         if (updateResult?.success && !updateLoading) {
             toast.success("Profile Completed Successfully!");
-            router.push("/industry");
+            router.push("/dashboard/industry");
             router.refresh();
         }
     }, [updateResult, updateLoading, router]);

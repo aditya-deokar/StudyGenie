@@ -14,7 +14,7 @@ interface UpdateUserData {
 }
 
 export async function updateUser(data: UpdateUserData) {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
         throw new Error("Unauthorized");
@@ -72,7 +72,7 @@ export async function updateUser(data: UpdateUserData) {
 }
 
 export async function getUserOnboardingStatus() {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
         throw new Error("Unauthorized");

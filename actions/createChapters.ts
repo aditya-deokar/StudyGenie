@@ -68,31 +68,24 @@ export const GenerateChapterContentLayout = async (
             "minLength": 1
           },
           "content": {
-            "description": "The main content of the section, structured as a sequence of text, code, or images.",
+            "description": "The main content of the section, structured as an array of content blocks. Each block should contain ONLY ONE of the following: textContent, codeSnippet, or imageUrl.",
             "type": "array",
             "items": {
               "type": "object",
-              "description": "A content block, which can be text, a code snippet, or an image.",
               "properties": {
                 "textContent": {
-                  "description": "A paragraph of text content.",
                   "type": "string"
                 },
                 "codeSnippet": {
-                  "description": "A block of code.",
                   "type": "string"
                 },
                 "imageUrl": {
-                  "description": "A URL for an image.",
                   "type": "string",
                   "format": "uri"
                 }
               },
-              "anyOf": [
-                  { "required": ["textContent"] },
-                  { "required": ["codeSnippet"] },
-                  { "required": ["imageUrl"] }
-              ]
+              "minProperties": 1,
+              "maxProperties": 1
             }
           },
           "examples": {
@@ -135,8 +128,7 @@ export const GenerateChapterContentLayout = async (
                     "Analyzing",
                     "Evaluating",
                     "Creating"
-                  ],
-                  "description": "Bloom's Taxonomy level for this exercise"
+                  ]
                 },
                 "exerciseCode": {
                   "type": "string"
