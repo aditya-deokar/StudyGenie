@@ -13,12 +13,12 @@ import {
   MessageSquare,
   Settings,
   Video,
+  Users,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useDashboardStore } from "@/lib/store"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { usePathname } from 'next/navigation'
 import Image from "next/image"
@@ -41,6 +41,7 @@ export function Sidebar({ className }: SidebarProps) {
     { icon: BookOpen, label: "Courses" ,href: "/dashboard/courses" },
     { icon: Video, label: "Interviews", href: "/dashboard/interviews" },
     { icon: BarChart3, label: "Skills", href: "/dashboard/skills" },
+    { icon: Users, label: "Community", href: "/dashboard/community" },
     { icon: Calendar, label: "Activity", href: "/dashboard/calendar" },
   ]
 
