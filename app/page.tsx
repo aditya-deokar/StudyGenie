@@ -28,9 +28,6 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-      
-
-        
         <Header/>
         <Hero data={neoPrepLandingData.hero} />
         <CreativeSteps />

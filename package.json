@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "concurrently \"next dev --turbopack\" \"node server.js\"",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
@@ -68,6 +68,8 @@
     "react-webcam": "^7.2.0",
     "react-youtube": "^10.1.0",
     "recharts": "^2.15.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
@@ -84,6 +86,7 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
     "prisma": "^6.6.0",
