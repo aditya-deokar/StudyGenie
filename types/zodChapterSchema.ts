@@ -19,23 +19,23 @@ const chapterSchema = z.object({
       sectionId: z.string().describe("Unique identifier for the section"),
       heading: z.string().min(1).describe("The heading of the section"),
       content: z.union([
-          z.string(),
-          z.array(
-              z.union([
-                  z.string(),
-                  z.object({
-                      textContent: z.string().optional().describe("Explain the Topic in simple words in detailed"),
-                      codeSnippet: z.string().optional(),
-                      imageUrl: z.string().url().optional(),
-                  }).optional(),
-              ]).optional()
-          )
+        z.string(),
+        z.array(
+          z.union([
+            z.string(),
+            z.object({
+              textContent: z.string().optional().describe("Explain the Topic in simple words in detailed"),
+              codeSnippet: z.string().optional(),
+              imageUrl: z.string().url().optional(),
+            }).optional(),
+          ]).optional()
+        )
       ]).describe("The main content of the section, which can include text, code snippets, and images"),
       examples: z.array(
         z.object({
           exampleId: z.string(),
           exampleDescription: z.string(),
-          exampleCode: z.string().optional(),
+          exampleCode: z.union([z.string(), z.null()]).optional().describe("Example code, can be a string or null"),
         }).required({ exampleId: true, exampleDescription: true })
       ).optional().describe("Examples related to this section"),
       exercises: z.array(
@@ -43,7 +43,7 @@ const chapterSchema = z.object({
           exerciseId: z.string(),
           exerciseText: z.string(),
           bloomLevel: bloomLevelEnum.describe("Bloom's Taxonomy level for this exercise"),
-          exerciseCode: z.string().optional(),
+          exerciseCode: z.union([z.string(), z.null()]).optional().describe("Exercise code, can be a string or null"),
         }).required({ exerciseId: true, exerciseText: true, bloomLevel: true })
       ).optional().describe("Exercises for students to practice, categorized by Bloom's Taxonomy level."),
       estimatedDuration: z.number().int().min(0).optional().describe("Estimated time to complete this section (in minutes)"),

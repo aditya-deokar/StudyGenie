@@ -1,15 +1,17 @@
+// src/components/Agent.tsx (or your file path)
+
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
-
+import Webcam from "react-webcam";
 import { cn } from "@/lib/utils";
-import { vapi } from "@/interview/lib/vapi.sdk";
-import { createFeedback } from "@/interview/lib/actions/general.action";
+import { vapi } from "@/interview/lib/vapi.sdk"; // Assuming this is your VAPI SDK setup
+import { createFeedback } from "@/interview/lib/actions/general.action"; // Your server action
 import { interviewer } from "@/interview/constants";
 
-
+// Define necessary types
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -22,6 +24,16 @@ interface SavedMessage {
   content: string;
 }
 
+interface AgentProps {
+  userName: string;
+  userId: string;
+  interviewId: string;
+  feedbackId?: string;
+  type: "generate" | "practice";
+  questions?: string[];
+  profileImage?: string;
+}
+
 const Agent = ({
   userName,
   userId,
@@ -29,7 +41,6 @@ const Agent = ({
   feedbackId,
   type,
   questions,
-  profileImage,
 }: AgentProps) => {
   const router = useRouter();
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
@@ -37,36 +48,28 @@ const Agent = ({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>("");
 
-  console.log(profileImage);
+  const webcamRef = useRef<Webcam>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
+
+  // --- VAPI EVENT LISTENERS ---
   useEffect(() => {
     const onCallStart = () => {
       setCallStatus(CallStatus.ACTIVE);
+      handleStartRecording();
     };
-
     const onCallEnd = () => {
+      handleStopRecording();
       setCallStatus(CallStatus.FINISHED);
     };
-
-    const onMessage = (message: Message) => {
+    const onMessage = (message: any) => {
       if (message.type === "transcript" && message.transcriptType === "final") {
-        const newMessage = { role: message.role, content: message.transcript };
-        setMessages((prev) => [...prev, newMessage]);
+        setMessages((prev) => [...prev, { role: message.role, content: message.transcript }]);
       }
     };
-
-    const onSpeechStart = () => {
-      console.log("speech start");
-      setIsSpeaking(true);
-    };
-
-    const onSpeechEnd = () => {
-      console.log("speech end");
-      setIsSpeaking(false);
-    };
-
-    const onError = (error: Error) => {
-      console.log("Error:", error);
-    };
+    const onSpeechStart = () => setIsSpeaking(true);
+    const onSpeechEnd = () => setIsSpeaking(false);
+    const onError = (error: Error) => console.error("VAPI Error:", error);
 
     vapi.on("call-start", onCallStart);
     vapi.on("call-end", onCallEnd);
@@ -83,140 +86,135 @@ const Agent = ({
       vapi.off("speech-end", onSpeechEnd);
       vapi.off("error", onError);
     };
-  }, []);
+  }, [handleStartRecording, handleStopRecording]);
 
+  // --- FEEDBACK GENERATION, VIDEO SAVING, AND REDIRECT ---
   useEffect(() => {
     if (messages.length > 0) {
       setLastMessage(messages[messages.length - 1].content);
     }
 
-    const handleGenerateFeedback = async (messages: SavedMessage[]) => {
-      console.log("handleGenerateFeedback");
-
-      const { success, feedbackId: id } = await createFeedback({
-        interviewId: interviewId!,
-        userId: userId!,
-        transcript: messages,
+    const handleFeedbackAndRedirect = (transcript: SavedMessage[]) => {
+      // Step 1: Create feedback without the video first.
+      // The video is handled separately on the client side.
+      createFeedback({
+        interviewId,
+        userId,
+        transcript,
         feedbackId,
+      }).then(({ success, feedbackId: newFeedbackId }) => {
+         if (success && newFeedbackId) {
+            // Step 2: If feedback creation is successful, save the video to session storage.
+            if (recordedChunks.length > 0) {
+              const videoBlob = new Blob(recordedChunks, { type: "video/webm" });
+              const reader = new FileReader();
+              reader.readAsDataURL(videoBlob);
+              reader.onloadend = () => {
+                const base64data = reader.result as string;
+                // Use a unique key for the video in session storage.
+                sessionStorage.setItem(`videoRecording-${interviewId}`, base64data);
+                // Step 3: Redirect to the feedback page.
+                router.push(`/dashboard/interviews/interview/${interviewId}/feedback`);
+              };
+            } else {
+               // If no video, just redirect.
+               router.push(`/dashboard/interviews/interview/${interviewId}/feedback`);
+            }
+         } else {
+            console.error("Failed to save feedback.");
+            router.push("/dashboard/interviews");
+         }
       });
-
-      if (success && id) {
-        router.push(`/dashboard/interviews/interview/${interviewId}/feedback`);
-      } else {
-        console.log("Error saving feedback");
-        router.push("/dashboard/interviews");
-      }
     };
 
-    if (callStatus === CallStatus.FINISHED) {
-      if (type === "generate") {
-        router.push("/dashboard/interviews");
+    if (callStatus === CallStatus.FINISHED && messages.length > 0) {
+      if (type !== "generate") {
+        handleFeedbackAndRedirect(messages);
       } else {
-        handleGenerateFeedback(messages);
+        router.push("/dashboard/interviews");
       }
+      // Reset messages to prevent this effect from running again on re-render.
+      setMessages([]);
     }
-  }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
+  }, [messages, callStatus, recordedChunks, feedbackId, interviewId, router, type, userId]);
 
-  const handleCall = async () => {
+  // --- RECORDING HANDLERS ---
+  const handleStartRecording = useCallback(() => {
+    if (webcamRef.current?.stream) {
+      setRecordedChunks([]);
+      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: "video/webm" });
+      mediaRecorderRef.current.addEventListener("dataavailable", (event) => {
+        if (event.data.size > 0) setRecordedChunks((prev) => [...prev, event.data]);
+      });
+      mediaRecorderRef.current.start();
+    }
+  }, []);
+
+  const handleStopRecording = useCallback(() => {
+    if (mediaRecorderRef.current?.state === "recording") {
+      mediaRecorderRef.current.stop();
+    }
+  }, []);
+
+  // --- CALL ACTIONS ---
+   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
+    setMessages([]);
+    setLastMessage("");
 
-    if (type === "generate") {
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-        variableValues: {
-          username: userName,
-          userid: userId,
-        },
-      });
-    } else {
-      let formattedQuestions = "";
-      if (questions) {
-        formattedQuestions = questions
-          .map((question) => `- ${question}`)
-          .join("\n");
-      }
+    const vapiConfig = {
+      variableValues: {
+        username: userName,
+        userid: userId,
+        ...(type !== "generate" && {
+          questions: questions?.map((q) => `- ${q}`).join("\n") ?? "",
+        }),
+      },
+    };
 
-      await vapi.start(interviewer, {
-        variableValues: {
-          questions: formattedQuestions,
-        },
-      });
-    }
+    const assistantId =
+      type === "generate"
+        ? process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!
+        : interviewer;
+
+    vapi.start(assistantId, vapiConfig);
   };
 
   const handleDisconnect = () => {
-    setCallStatus(CallStatus.FINISHED);
     vapi.stop();
   };
 
+  // --- RENDER ---
   return (
     <>
-      <div className="call-view">
-        {/* AI Interviewer Card */}
-        <div className="card-interviewer">
-          <div className="avatar">
-            <Image
-              src="/ai-avatar.png"
-              alt="profile-image"
-              width={65}
-              height={54}
-              className="object-cover"
-            />
+      <div className="call-view" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+        <div className="card-interviewer" style={{ textAlign: 'center' }}>
+          <div className="avatar" style={{ position: 'relative', display: 'inline-block' }}>
+            <Image src="/ai-avatar.png" alt="AI Avatar" width={65} height={54} />
             {isSpeaking && <span className="animate-speak" />}
           </div>
-          <h3 className="text-foreground">AI Interviewer</h3>
+          <h3>AI Interviewer</h3>
         </div>
-
-        {/* User Profile Card */}
-        <div className="card-border glass">
-          <div className="card-content">
-            <Image
-              src={profileImage!}
-              alt="profile-image"
-              width={539}
-              height={539}
-              className="rounded-full object-cover size-[120px]"
-            />
-            <h3 className="text-foreground">{userName}</h3>
+        <div className="card-border glass" style={{ padding: '10px' }}>
+          <div className="card-content" style={{ textAlign: 'center' }}>
+            <Webcam audio={false} ref={webcamRef} mirrored={true} className="rounded-full object-cover size-[120px]" />
+            <h3>{userName}</h3>
           </div>
         </div>
       </div>
-
       {messages.length > 0 && (
-        <div className="transcript-border">
-          <div className="transcript">
-            <p
-              key={lastMessage}
-              className={cn(
-                "transition-opacity duration-500 opacity-0",
-                "animate-fadeIn opacity-100"
-              )}
-            >
-              {lastMessage}
-            </p>
-          </div>
+        <div className="transcript-border" style={{ marginTop: '20px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}>
+          <div className="transcript"><p>{lastMessage}</p></div>
         </div>
       )}
-
       <div className="w-full flex justify-center mt-4">
-        {callStatus !== "ACTIVE" ? (
-          <button className="relative btn-call" onClick={() => handleCall()}>
-            <span
-              className={cn(
-                "absolute animate-ping rounded-full opacity-75",
-                callStatus !== "CONNECTING" && "hidden"
-              )}
-            />
-
-            <span className="relative">
-              {callStatus === "INACTIVE" || callStatus === "FINISHED"
-                ? "Call"
-                : ". . ."}
-            </span>
+        {callStatus !== CallStatus.ACTIVE ? (
+          <button className="relative btn-call" onClick={handleCall} disabled={callStatus === CallStatus.CONNECTING}>
+            <span className={cn("absolute animate-ping", callStatus !== CallStatus.CONNECTING && "hidden")} />
+            <span>{callStatus === CallStatus.CONNECTING ? "Connecting..." : "Start Interview"}</span>
           </button>
         ) : (
-          <button className="btn-disconnect" onClick={() => handleDisconnect()}>
-            End
-          </button>
+          <button className="btn-disconnect" onClick={handleDisconnect}>End Interview</button>
         )}
       </div>
     </>

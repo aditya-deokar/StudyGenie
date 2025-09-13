@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import { vapi } from "@/interview/lib/vapi.sdk";
-import { aiTeacher } from "@/interview/constants";
+import { aiTeacher, aiTeacherHindi } from "@/interview/constants";
 
 
 // Define more relevant props for a teaching context
@@ -36,6 +36,8 @@ interface SavedMessage {
   content: string;
 }
 
+
+
 const AITeacher = ({
   studentName,
   studentId,
@@ -51,6 +53,29 @@ const AITeacher = ({
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [lastMessage, setLastMessage] = useState<string>("");
+
+//   const chapterContext: string = `
+// अध्याय शीर्षक: पायथन प्रोग्रामिंग की परिचय
+
+// पाठ्य सामग्री:
+// पायथन एक उच्च-स्तरीय, व्याख्यायित प्रोग्रामिंग भाषा है जिसे पढ़ने और समझने में बहुत आसान माना जाता है। यह कई प्रकार के अनुप्रयोगों के लिए उपयुक्त है, जैसे वेब डेवलपमेंट, डेटा एनालिसिस, मशीन लर्निंग, ऑटोमेशन आदि। पायथन की मुख्य विशेषताएं इसमें सरल सिंटैक्स, विस्तृत लाइब्रेरी समर्थन, और बहुपरकारीता (multi-paradigm support) हैं।
+
+// मुख्य अवधारणाएं:
+// 1. वेरिएबल और डेटा प्रकार: पायथन में वेरिएबल को किसी भी प्रकार के डेटा (जैसे इंटीजर, स्ट्रिंग, लिस्ट) को स्टोर करने के लिए उपयोग किया जाता है।
+// 2. नियंत्रण संरचनाएं: if-else, for loop, while loop का उपयोग लॉजिक को नियंत्रित करने के लिए किया जाता है।
+// 3. फंक्शन्स: पुन: प्रयोज्य कोड ब्लॉक बनाने के लिए def कीवर्ड का उपयोग करके फंक्शन्स बनाते हैं।
+// 4. मॉड्यूल और लाइब्रेरी: पायथन में पहले से निर्मित मॉड्यूल और लाइब्रेरी का उपयोग करके एप्लीकेशन डेवलपमेंट को सरल बनाते हैं।
+
+// उदाहरण:
+// \`\`\`python
+// def greet(name):
+//     print(f"नमस्ते, {name}! पायथन सीखना बहुत मजेदार है।")
+
+// greet("अमित")
+// \`\`\`
+
+// इस उदाहरण में, हमने एक फंक्शन \`greet\` बनाया है जो दिए गए नाम के साथ एक स्वागत संदेश प्रिंट करता है।
+// `;
 
   useEffect(() => {
     // Vapi event listeners (no changes needed here, they are generic)
@@ -131,6 +156,21 @@ const AITeacher = ({
       firstMessage: `Hello ${studentName}! I see you're ready to start learning about "${chapterTitle}". Shall we begin?`
     });
   };
+
+//   const startLesson = async () => {
+//   setCallStatus(CallStatus.CONNECTING);
+
+//   await vapi.start(aiTeacherHindi, {
+//     variableValues: {
+//       studentName: studentName,
+//       chapterTitle: chapterTitle,
+//       studentProgress: studentProgress,
+//       chapterContext: chapterContext,
+//     },
+//     firstMessage: `नमस्ते ${studentName}! मैं देख रहा हूँ कि आप "${chapterTitle}" के बारे में सीखने के लिए तैयार हैं। क्या हम शुरू करें?`
+//   });
+// };
+
 
   const endLesson = () => {
     setCallStatus(CallStatus.FINISHED);
