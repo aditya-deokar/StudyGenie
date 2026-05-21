@@ -4,6 +4,10 @@
 
 **AI-powered career preparation platform — generate courses, simulate interviews, and unlock real-time industry intelligence.**
 
+**Live:** https://study-genie-theta.vercel.app/
+
+![StudyGenie Banner](./public/banner.png)
+
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
@@ -43,7 +47,7 @@
 - Delivering weekly AI-refreshed industry salary data, skill trends, and market outlooks
 - Providing a collaborative community workspace with real-time messaging
 
-The platform combines Google's Gemini AI, voice-powered interview agents via Vapi, scheduled background jobs via Inngest, and a Socket.IO real-time layer — all orchestrated within a Next.js 15 App Router application backed by PostgreSQL.
+The platform combines Google's Gemini AI, voice-powered interview agents via Vapi, scheduled background jobs via Inngest, and a Socket.IO real-time layer — all orchestrated within a Next.js 15 App Router application.
 
 ---
 
