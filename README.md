@@ -1,12 +1,12 @@
 <div align="center">
 
+![StudyGenie Banner](https://github.com/user-attachments/assets/0abf6ac5-c6b5-483f-9b92-eb961734c2f2)
+
 # 🧠 StudyGenie (NeoPrep)
 
 **AI-powered career preparation platform — generate courses, simulate interviews, and unlock real-time industry intelligence.**
 
 **Live:** https://study-genie-theta.vercel.app/
-
-![StudyGenie Banner](./public/banner.png)
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
